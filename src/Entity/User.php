@@ -9,13 +9,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\EventListner\PasswordSubscriber;
-use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email!')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
     
@@ -140,30 +139,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->isVerified = $isVerified;
 
         return $this;
-    }
-
-    public function isEmailAuthEnabled(): bool
-    {
-        return true; // This can be a persisted field to switch email code authentication on/off
-    }
-
-    public function getEmailAuthRecipient(): string
-    {
-        return $this->email;
-    }
-
-    public function getEmailAuthCode(): string
-    {
-        if (null === $this->authCode) {
-            throw new \LogicException('The email authentication code was not set');
-        }
-
-        return $this->authCode;
-    }
-
-    public function setEmailAuthCode(string $authCode): void
-    {
-        $this->authCode = $authCode;
     }
 
 }
