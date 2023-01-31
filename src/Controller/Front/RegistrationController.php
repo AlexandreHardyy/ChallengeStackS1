@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -43,23 +43,25 @@ class RegistrationController extends AbstractController
             $userRepository->save($user, true);
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation('front_app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@vgcreator.fr', 'Confirmation de votre email'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('front/registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
+            $this->addFlash('success', 'Your account has been created. Please check your email to confirm your email address.');
+            return $this->redirectToRoute('front_app_login');
+            /*
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
-            );
+            );*/
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('front/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -75,12 +77,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('front_app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('front_app_login');
     }
 }

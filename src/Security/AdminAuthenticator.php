@@ -15,11 +15,11 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
+class AdminAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'front_app_login';
+    public const LOGIN_ROUTE = 'admin_app_login';
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
@@ -47,7 +47,8 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('front_app_default'));
+        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        return new RedirectResponse($this->urlGenerator->generate('admin_app_default'));
     }
 
     protected function getLoginUrl(Request $request): string
