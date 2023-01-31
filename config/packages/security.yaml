@@ -20,7 +20,7 @@ security:
             security: false
         secured_area:
             lazy: true
-            pattern: ^/admin
+            pattern: ^/admin802Ng
             provider: app_employee_provider
             custom_authenticator: App\Security\AdminAuthenticator
             logout:
@@ -44,8 +44,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin802Ng/login, roles: PUBLIC_ACCESS }
+         - { path: ^/admin802Ng, roles: ROLE_ADMIN }
          - { path: ^/login, roles: PUBLIC_ACCESS }
          - { path: ^/register, roles: PUBLIC_ACCESS }
          #- { path: ^/verify/email, roles: PUBLIC_ACCESS }
