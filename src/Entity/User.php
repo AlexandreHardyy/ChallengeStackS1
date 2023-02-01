@@ -50,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
     private ?Cart $cart = null;
 
+    #[ORM\OneToOne(mappedBy: 'userRequest', cascade: ['persist', 'remove'])]
+    private ?SellerRequest $sellerRequest = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -196,6 +199,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->cart = $cart;
+
+        return $this;
+    }
+
+    public function getSellerRequest(): ?SellerRequest
+    {
+        return $this->sellerRequest;
+    }
+
+    public function setSellerRequest(SellerRequest $sellerRequest): self
+    {
+        // set the owning side of the relation if necessary
+        if ($sellerRequest->getUserRequest() !== $this) {
+            $sellerRequest->setUserRequest($this);
+        }
+
+        $this->sellerRequest = $sellerRequest;
 
         return $this;
     }
