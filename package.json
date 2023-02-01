@@ -13,11 +13,7 @@
         "postcss-loader": "^7.0.2",
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.57.1",
-<<<<<<< HEAD
         "sass-loader": "^13.0.0",
-=======
-        "sass-loader": "^13.2.0",
->>>>>>> main
         "tailwindcss": "^3.2.4",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
