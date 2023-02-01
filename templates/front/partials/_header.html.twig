@@ -82,8 +82,7 @@
 									alt="Trending: Our most popular digital assets this week."
 									class="object-cover object-center">
 							</div>
-							{% if last_products[0].id is defined  %}
-							<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+							<a href="{{ path('front_app_product_show', {'id': products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 								<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 								Currently Trending
 							</a>
@@ -197,8 +196,7 @@
 															alt="Trending: Our most popular digital assets this week."
 															class="object-cover object-center">
 													</div>
-													{% if last_products[0].id is defined  %}
-													<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+													<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 														<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 														Currently Trending
 													</a>
