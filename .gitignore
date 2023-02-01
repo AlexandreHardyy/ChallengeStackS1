@@ -43,6 +43,7 @@ ehthumbs_vista.db
 .history/
 *.vsix
 
+package-lock.json
 # PHPStorm
 .idea/
 .idea_modules/
