@@ -5,7 +5,7 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   darkMode: 'class', // or 'media' or 'class'
-	theme: {
+    theme: {
         fontFamily: {
             'bungee-inline': ['Bungee Inline', 'cursive'],
             'bungee-shade': ['Bungee Shade', 'cursive'],
@@ -26,7 +26,7 @@ module.exports = {
             'bermuda': '#78dcca',
           },
         },
-	},
+    },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
