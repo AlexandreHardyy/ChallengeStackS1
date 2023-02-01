@@ -11,7 +11,8 @@ module.exports = {
             'bungee-shade': ['Bungee Shade', 'cursive'],
             'lato': ['Lato', 'sans-serif']
         },
-        colors: {
+        extend: {
+          colors: {
             transparent: 'transparent',
             current: 'currentColor',
             'main-blue': '#F8F9FD',
@@ -23,9 +24,7 @@ module.exports = {
             'silver': '#ecebff',
             'bubble-gum': '#ff77e9',
             'bermuda': '#78dcca',
-        },
-		extend: {
-
+          },
         },
 	},
   plugins: [
