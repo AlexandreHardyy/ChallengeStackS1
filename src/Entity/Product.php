@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -17,11 +20,9 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updated_at = null;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $creator = null;
 
     public function getId(): ?int
     {
@@ -40,26 +41,14 @@ class Product
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreator(): ?User
     {
-        return $this->created_at;
+        return $this->creator;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreator(?User $creator): self
     {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
+        $this->creator = $creator;
 
         return $this;
     }
