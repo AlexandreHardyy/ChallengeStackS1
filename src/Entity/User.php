@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -43,11 +45,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Product::class)]
+    private Collection $products;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -147,26 +151,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFirstname(): ?string
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
     {
-        return $this->firstname;
+        return $this->products;
     }
 
-    public function setFirstname(string $firstname): self
+    public function addProduct(Product $product): self
     {
-        $this->firstname = $firstname;
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setCreator($this);
+        }
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function removeProduct(Product $product): self
     {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCreator() === $this) {
+                $product->setCreator(null);
+            }
+        }
 
         return $this;
     }
