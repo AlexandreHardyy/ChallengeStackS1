@@ -24,6 +24,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -56,9 +57,13 @@ class Product
     private ?bool $isBanned = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
+    #[Assert\Length(max: 255, maxMessage: 'Vous devez avoir maximum 255 caractères.')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
+    #[Assert\Length(max: 3000, maxMessage: 'Vous devez avoir maximum 3000 caractères.')]
     private ?string $description = null;
 
     public function __construct()
