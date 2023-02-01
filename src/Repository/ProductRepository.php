@@ -39,6 +39,36 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function getLastProducts(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    // Loop X times until limit is reached and add random products to array to return
+    // Without using RAND() or RANDOM() in SQL
+    public function getRandomProducts(int $limit = 10): array
+    {
+        $products = [];
+        $count = $this->count([]);
+
+        for ($i = 0; $i < $limit; $i++) {
+            $random = rand(1, $count);
+            $product = $this->find($random);
+
+            if ($product) {
+                $products[] = $product;
+            }
+        }
+
+        return $products;
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
