@@ -23,6 +23,10 @@
                 <th>Updated_at</th>
                 <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>Img</th>
+                <td> <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.price }}"></td>
+            </tr>
         </tbody>
     </table>
 
