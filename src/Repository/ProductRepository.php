@@ -49,9 +49,6 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
 
-
-    // Loop X times until limit is reached and add random products to array to return
-    // Without using RAND() or RANDOM() in SQL
     public function getRandomProducts(int $limit = 10): array
     {
         $products = [];
