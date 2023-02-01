@@ -1,7 +1,7 @@
 <!-- Mobile menu -->
 <div x-show="open" @click.away="open = false" class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
 	<div class="fixed inset-0 z-40 flex">
-		<div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+		<div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl bg-opacity-90 backdrop-blur-xl backdrop-filter">
 			<div x-show="open" id="tabs-1-panel-1" class="flex px-4 py-4 justify-between" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
 				<button @click="open = false" type="button"
 					class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
@@ -82,8 +82,8 @@
 									alt="Trending: Our most popular digital assets this week."
 									class="object-cover object-center">
 							</div>
-							{% if last_products[0].id is defined  %}
-							<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+							{% if products[0].id is defined  %}
+							<a href="{{ path('front_app_product_show', {'id': products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 								<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 								Currently Trending
 							</a>
@@ -197,8 +197,8 @@
 															alt="Trending: Our most popular digital assets this week."
 															class="object-cover object-center">
 													</div>
-													{% if last_products[0].id is defined  %}
-													<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+													{% if products[0].id is defined  %}
+													<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 														<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 														Currently Trending
 													</a>
