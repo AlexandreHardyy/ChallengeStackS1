@@ -5,13 +5,13 @@ namespace App\Entity;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\EmployeeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
-#[ORM\Table(name: '`employee`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email!')]
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
+#[ORM\Table(name: '`employee`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
