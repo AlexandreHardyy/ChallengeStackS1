@@ -13,8 +13,6 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('price')
-            ->add('created_at')
-            ->add('updated_at')
         ;
     }
 
