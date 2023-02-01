@@ -23,6 +23,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_SELLER')")]
     public function new(Request $request, ProductRepository $productRepository): Response
     {
         $product = new Product();
@@ -31,6 +32,9 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setCreator($this->getUser());
+            $product->setIsActive(false);
+            $product->setIsBanned(false);
+            $product->setIsValid(false);
             $productRepository->save($product, true);
 
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
@@ -51,6 +55,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_SELLER')")]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('EDIT_PRODCUT', $product);
