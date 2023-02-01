@@ -34,9 +34,9 @@ class Product
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
     #[Assert\Image(
         maxSize: '2M',
-        mimeTypes: ['image/png', 'image/jpeg'],
-        maxRatio: '10',
-        mimeTypesMessage: 'coucou, tu peux mettre que des png ou jpeg',
+        mimeTypes: ['image/png', 'image/jpeg, image/apng'],
+        maxRatio: '5',
+        mimeTypesMessage: 'PNG or JPG or APNG',
         maxRatioMessage: 'Votre ratio d\'image est de {{ ratio }}, celui accepté est {{ max_ratio }}'
     )]
     private ?File $imageFile = null;
