@@ -65,10 +65,13 @@
 									alt="New arrivals: Our latest digital assets for sale."
 									class="object-cover object-center">
 							</div>
+							{% if last_products[0].id is defined  %}
 							<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 								<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 								New Arrivals
 							</a>
+							{% endif %}
+
 							<p aria-hidden="true" class="mt-1">Explore</p>
 						</div>
 
@@ -79,10 +82,13 @@
 									alt="Trending: Our most popular digital assets this week."
 									class="object-cover object-center">
 							</div>
+							{% if last_products[0].id is defined  %}
 							<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 								<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 								Currently Trending
 							</a>
+							{% endif %}
+							
 							<p aria-hidden="true" class="mt-1">Discover</p>
 						</div>
 					</div>
@@ -191,10 +197,13 @@
 															alt="Trending: Our most popular digital assets this week."
 															class="object-cover object-center">
 													</div>
+													{% if last_products[0].id is defined  %}
 													<a href="{{ path('front_app_product_show', {'id': random_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 														<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 														Currently Trending
 													</a>
+													{% endif %}
+													
 													<p aria-hidden="true" class="mt-1">Discover</p>
 												</div>
 
@@ -205,10 +214,13 @@
 															alt="New arrivals: Our latest digital assets for sale."
 															class="object-cover object-center">
 													</div>
+													{% if last_products[0].id is defined  %}
 													<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 														<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 														New Arrivals
 													</a>
+													{% endif %}
+													
 													<p aria-hidden="true" class="mt-1">Explore</p>
 												</div>
 											</div>
