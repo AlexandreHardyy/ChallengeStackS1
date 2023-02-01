@@ -5,13 +5,14 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   darkMode: 'class', // or 'media' or 'class'
-	theme: {
+    theme: {
         fontFamily: {
             'bungee-inline': ['Bungee Inline', 'cursive'],
             'bungee-shade': ['Bungee Shade', 'cursive'],
             'lato': ['Lato', 'sans-serif']
         },
-        colors: {
+        extend: {
+          colors: {
             transparent: 'transparent',
             current: 'currentColor',
             'main-blue': '#F8F9FD',
@@ -23,11 +24,9 @@ module.exports = {
             'silver': '#ecebff',
             'bubble-gum': '#ff77e9',
             'bermuda': '#78dcca',
+          },
         },
-		extend: {
-
-        },
-	},
+    },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),

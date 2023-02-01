@@ -19,6 +19,7 @@ class ProductController extends AbstractController
     {
         return $this->render('front/product/index.html.twig', [
             'products' => $productRepository->findAll(),
+            'last_products' => $productRepository->getLastProducts(1),
         ]);
     }
 
