@@ -3,23 +3,28 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
+<div x-data="{ open: false }" class="bg-white">
+	<!-- Top navigation -->
+	{{ include('front/partials/_header.html.twig') }}
+
     <section class="h-screen flex">
-      <aside class="w-1/2 bg-main-blue flex-1 items-center justify-center flex">
-          <div class="px-4">
-                <h3 class="font-bungee-inline lg:text-5xl md:text-4xl text-2xl">Faire vivre  les Images, Est notre mot d’ordre</h3>
-          </div>
-      </aside>
-        <div class="absolute h-full md:left-0 md:right-0 md:w-48 md:m-auto flex md:items-center right-0 items-start w-24">
-            <img src="{{ asset('assets/icons_arts_verticals.png') }}" class="object-cover"/>
-        </div>
-      <aside class="w-1/2 flex-1 hidden md:block">
-        <img class="min-h-full object-cover" src="{{ asset('assets/joconde.png') }}" />
-      </aside>
+		<aside class="w-1/2 bg-main-blue flex-1 items-center justify-center flex">
+			<div class="px-4">
+				<h3 class="font-bungee-inline lg:text-5xl md:text-4xl text-2xl">Faire vivre  les Images, Est notre mot d’ordre</h3>
+			</div>
+		</aside>
+			<div class="absolute h-full md:left-0 md:right-0 md:w-48 md:m-auto flex md:items-center right-0 items-start w-24">
+				<img src="{{ asset('assets/icons_arts_verticals.png') }}" class="object-cover"/>
+			</div>
+		<aside class="w-1/2 flex-1 hidden md:block">
+			<img class="min-h-full object-cover" src="{{ asset('assets/joconde.png') }}" />
+		</aside>
     </section>
+
     <section class="flex flex-col items-center p-8">
         <h3 class="font-bungee-inline lg:text-5xl md:text-4xl text-2xl">New Publications</h3>
         <div class="mt-8 max-w-[850px] xs	w-full grid grid-cols-1 gap-x-6 gap-y-7 place-items-center md:grid-cols-2">
-            <div class="bg-main-blue w-96 h-44 flex p-3 rounded-[12px] border flex justify-between">
+            <div class="bg-main-blue w-96 h-44  p-3 rounded-[12px] border flex justify-between">
                 <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
                     <div>
                         <h4 class="font-bungee-shade md:text-2xl">Kermit the frog</h4>
@@ -29,7 +34,7 @@
                 </div>
                 <img class="flex-auto w-36" src="{{ asset('assets/kermit.png') }}" />
             </div>
-            <div class="bg-main-blue w-96 h-44 flex p-3 rounded-[12px] border flex justify-between">
+            <div class="bg-main-blue w-96 h-44  p-3 rounded-[12px] border flex justify-between">
                 <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
                     <div>
                         <h4 class="font-bungee-shade md:text-2xl">Kermit the frog</h4>
@@ -39,7 +44,7 @@
                 </div>
                 <img class="flex-auto w-36" src="{{ asset('assets/kermit.png') }}" />
             </div>
-            <div class="bg-main-blue w-96 h-44 relative flex p-3 rounded-[12px] border flex justify-between">
+            <div class="bg-main-blue w-96 h-44 relative  p-3 rounded-[12px] border flex justify-between">
                 <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
                     <div>
                         <h4 class="font-bungee-shade md:text-2xl">Kermit the frog</h4>
@@ -78,5 +83,6 @@
             </article>
         </aside>
     </section>
+</div>
 {% endblock %}
 
