@@ -20,12 +20,6 @@ class UserChecker implements UserCheckerInterface
             // the message passed to this exception is meant to be displayed to the user
             throw new CustomUserMessageAccountStatusException('Please verify your email address.');
         }
-
-        
-        if ($user->isDeleted()) {
-            // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
-        }
     }
 
     
