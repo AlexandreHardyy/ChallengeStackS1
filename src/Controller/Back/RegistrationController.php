@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@vgcreator.fr', 'Confirmation de votre email'))
                     ->to($employee->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Please Confirm  back your Email')
                     ->htmlTemplate('back/registration/confirmation_email.html.twig')
             );
 
@@ -71,12 +71,25 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, EmployeeRepository $employeeRepository): Response
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // validate email confirmation link, sets User::isVerified=true and persists
+
+        $id = $request->get('id'); // retrieve the user id from the url
+        
+        // Verify the user id exists and is not null
+        if (null === $id) {
+            return $this->redirectToRoute('front_app_default');
+        }
+        
+        $employee = $employeeRepository->find($id);
+        if (!$employee instanceof Employee) {
+            return $this->redirectToRoute('front_app_default');
+        }
+
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->emailVerifier->handleEmailConfirmation($request, $employee);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 

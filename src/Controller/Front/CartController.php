@@ -15,6 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+    #[Route('/', name: 'app_cart_show', methods: ['GET'])]
+    public function show(): Response
+    {
+        $cart = $this->getUser()->getCart();
+        return $this->render('front/cart/show.html.twig', [
+            'cart' => $cart,
+        ]);
+    }
 
     #[Route('/new/{id}', name: 'app_cart_new', methods: ['GET', 'POST'])]
     public function new(Product $product, CartRepository $cartRepository): Response
@@ -28,15 +36,7 @@ class CartController extends AbstractController
         }
         $cart->addProduct($product);
         $cartRepository->save($cart, true);
-        return $this->redirectToRoute('front_app_cart_show', ['id' => $cart->getId()], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
-    public function show(Cart $cart): Response
-    {
-        return $this->render('front/cart/show.html.twig', [
-            'cart' => $cart,
-        ]);
+        return $this->redirectToRoute('front_app_cart_show', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
@@ -48,6 +48,6 @@ class CartController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('front_app_cart_show', ['id' => $cart->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('front_app_cart_show', [],Response::HTTP_SEE_OTHER);
     }
 }
