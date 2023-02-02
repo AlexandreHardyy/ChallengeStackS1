@@ -52,7 +52,7 @@ class ProductController extends AbstractController
         $product->setIsBanned(true);
         $productRepository->save($product, true);
 
-        $this->addFlash('success', 'Product banned successfully');
+        $this->addFlash('warning', 'Product banned successfully');
 
         return $this->redirectToRoute('admin_app_product_index', [], Response::HTTP_SEE_OTHER);
     }
