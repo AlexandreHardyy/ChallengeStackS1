@@ -52,6 +52,9 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
+
+            $this->addFlash('success', 'Your account has been created. Please check your email to confirm your email address.');
+            
             return $this->redirectToRoute('front_app_login');
             /*
             return $userAuthenticator->authenticateUser(
