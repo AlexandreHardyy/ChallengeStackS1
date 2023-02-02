@@ -1,7 +1,6 @@
 {% extends 'front_base.html.twig' %}
 
 {% block body %}
-    {{ include('front/partials/_header.html.twig') }}
     <h1 class="text-3xl w-screen px-48 pt-4"><span class="font-bold">Panier</span> - {{ app.user.cart.products|length }} produit(s)</h1>
 
     <div class="flex flex-col w-screen px-24 py-8">
