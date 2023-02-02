@@ -28,7 +28,8 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/team/add', name: 'app_register')]
     public function register(Request $request, 
     UserAuthenticatorInterface $userAuthenticator, 
     AppCustomAuthenticator $authenticator, 
@@ -38,8 +39,11 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(AdminRegistrationFormType::class, $employee);
         $form->handleRequest($request);
 
+      
         if ($form->isSubmitted() && $form->isValid()) {
+            
             // encode the plain password
+            $employee->setRoles($form->get('roles')->getData());
             $employeeRepository->save($employee, true);
 
             // generate a signed url and email it to the user
@@ -69,8 +73,7 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
