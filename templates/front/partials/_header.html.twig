@@ -287,7 +287,7 @@
 					<!-- Cart -->
 					{% if app.user.cart.id is defined %}
 					<div class="ml-4 flow-root lg:ml-6">
-						<a href="{{ path('front_app_cart_show', {'id': app.user.cart.id}) }}" class="group -m-2 flex items-center p-2">
+						<a href="{{ path('front_app_cart_show') }}" class="group -m-2 flex items-center p-2">
 							<picture>
 								<source srcset="/img/Cart.svg" media="(min-width: 768px)">
 								<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">

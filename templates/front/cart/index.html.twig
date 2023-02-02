@@ -21,7 +21,7 @@
                 <td>{{ cart.createdAt ? cart.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ cart.updatedAT ? cart.updatedAT|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('front_app_cart_show', {'id': cart.id}) }}">show</a>
+                    <a href="{{ path('front_app_cart_show') }}">show</a>
                 </td>
             </tr>
         {% else %}
