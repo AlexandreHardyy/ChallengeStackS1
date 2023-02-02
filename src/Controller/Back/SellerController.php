@@ -20,8 +20,17 @@ class SellerController extends AbstractController
         ]);
     }
 
+    #[Route('/seller/{id}/show', name: 'app_seller_show')]
+    public function showOne(SellerRequest $sellerRequest): Response
+    {
+        return $this->render('back/seller/show.html.twig', [
+            'seller' => $sellerRequest,
+        ]);
+    }
 
-    #[Route('/seller/{id}/validate', name: 'app_seller_validate')]
+
+
+    #[Route('/seller/validate/{id}', name: 'app_seller_validate')]
     public function validate(SellerRequest $sellerRequest, UserRepository $userRepository): Response
     {
         $user = $sellerRequest->getUserRequest();
@@ -39,4 +48,5 @@ class SellerController extends AbstractController
     
         return $this->redirectToRoute('admin_app_seller');
     }
+
 }
