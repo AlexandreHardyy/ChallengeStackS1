@@ -1,0 +1,1 @@
+console.log('updateLicense.js loaded');
