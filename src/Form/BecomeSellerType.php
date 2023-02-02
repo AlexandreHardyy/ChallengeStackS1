@@ -12,8 +12,7 @@ class BecomeSellerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('createdAt')
-            ->add('updatedAT')
+            ->add('description')
         ;
     }
 
