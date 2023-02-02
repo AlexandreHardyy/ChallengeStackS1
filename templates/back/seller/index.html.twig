@@ -23,8 +23,7 @@
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created At</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Verified</th>
-                  <span class="sr-only">Actions</span>
-                </th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
               </tr>
             </thead>
             <tbody class="bg-white">
@@ -32,7 +31,7 @@
               <tr>
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ seller.id }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ seller.userRequest.email }}</td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">DESCRIPTION</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ seller.description|length > 50 ?  seller.description|slice(0, 50) ~ '...' : seller.description }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ seller.createdAt ? seller.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {% if seller.userRequest.roles[0] is same as("ROLE_SELLER") %}
@@ -57,6 +56,9 @@
                     </span>
                    </button>
                   </a>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <a href="{{ path('admin_app_seller_show', {'id': seller.id}) }}" class="text-indigo-600 hover:text-indigo-900">Show</a>
                 </td>
               </tr>
               {% else %}
