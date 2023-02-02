@@ -285,7 +285,7 @@
 						</div>
 
 					<!-- Cart -->
-					{% if app.user %}
+					{% if app.user.cart.id is defined %}
 					<div class="ml-4 flow-root lg:ml-6">
 						<a href="{{ path('front_app_cart_show', {'id': app.user.cart.id}) }}" class="group -m-2 flex items-center p-2">
 							<picture>
