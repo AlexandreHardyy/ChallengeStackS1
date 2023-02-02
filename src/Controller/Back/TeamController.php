@@ -26,18 +26,20 @@ class TeamController extends AbstractController
     #[Route('/team/edit/{id}', name: 'app_team_edit')]
     public function editOne(Employee $employee, EmployeeRepository $employeeRepository, Request $request): Response
     {
-        //render the form UpdateEmployeeFormType
+        
         $form = $this->createForm(UpdateEmployeeFormType::class, $employee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            dd($form->getData());
             $employeeRepository->save($employee, true);
             $this->addFlash('success', 'Employee updated!');
             return $this->redirectToRoute('admin_app_team');
         }
 
-        return $this->render('back/team/show.html.twig', [
-            'updateEmployeeForm' => $form->createView()
+        return $this->renderForm('back/team/show.html.twig', [
+            'updateEmployeeForm' => $form
         ]);
     }
 

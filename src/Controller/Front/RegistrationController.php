@@ -52,13 +52,13 @@ class RegistrationController extends AbstractController
             );
 
             $this->addFlash('success', 'Your account has been created. Please check your email to confirm your email address.');
-            return $this->redirectToRoute('front_app_login');
-            /*
+            //return $this->redirectToRoute('front_app_login');
+            
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
-            );*/
+            );
         }
 
         return $this->render('front/registration/register.html.twig', [
