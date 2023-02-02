@@ -46,9 +46,7 @@
 
             <form class="mt-6">
                 <div class="sm:flex-col1 mt-10 flex">
-                    <button type="submit"
-                        class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-emerald-600 py-3 px-8 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full">Add
-                        to cart</button>
+                    <a class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-emerald-600 py-3 px-8 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full" href="{{ path('front_app_cart_new', {'id': product.id}) }}">Add to cart</a>
 
                     <button type="button"
                         class="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
@@ -122,14 +120,6 @@
                                 </picture>
                                 <p class="inline-flex ml-2">Compatible with: Blender</p>
                             </div>
-                            <div class="flex mt-2">
-                                <picture class="inline-flex">
-                                    <source srcset="/img/Star-full.svg" media="(min-width: 768px)">
-                                    <img class="h-6 w-6 flex-shrink-0"
-                                        src="/img/Star-full.svg" alt="Check icon">
-                                </picture>
-                                <p class="inline-flex ml-2">Compatible with: Blender</p>
-                            </div>
                         </div>
                     </div>
 
@@ -141,7 +131,7 @@
                                 x-bind:aria-expanded="open.toString()">
                                 <span class="text-gray-900 text-sm font-medium" x-state:on="Open"
                                     x-state:off="Closed"
-                                    :class="{ 'text-emerald-600': open, 'text-gray-500': !(open) }">Care</span>
+                                    :class="{ 'text-emerald-600': open, 'text-gray-500': !(open) }">7-day money-back guarantee</span>
                                 <span class="ml-6 flex items-center">
                                     <picture>
                                         <source srcset="/img/Plus.svg" media="(min-width: 768px)">
@@ -163,17 +153,15 @@
                             </button>
                         </h3>
                         <div class="prose prose-sm pb-6" id="disclosure-1" x-show="open" style="display: none;">
-                            <ul role="list">
-
-                                <li>Spot clean as needed</li>
-
-                                <li>Hand wash with mild soap</li>
-
-                                <li>Machine wash interior dividers</li>
-
-                                <li>Treat handle and tabs with leather conditioner</li>
-
-                            </ul>
+                            <p>
+                                If you don't like the digital asset you purchased, you can request a refund within 7 days of your purchase.
+                            </p>
+                            <p class="mt-2">
+                                You can also request a refund if the digital asset you purchased is not as described in the listing.
+                            </p>
+                            <p class="mt-2">
+                                If you have any questions, please contact the seller directly. You can find the seller's contact information in the listing.
+                            </p>
                         </div>
                     </div>
                 </div>
