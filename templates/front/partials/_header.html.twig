@@ -252,8 +252,11 @@
 								</div>
 							</div>
 
-							<a href="#"
-								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Sellers</a>
+							{% if app.user %}
+							<a href="{{ path('front_app_seller') }}"
+								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Sellers
+							</a>
+							{% endif %}
 						</div>
 					</div>
 
