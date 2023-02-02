@@ -36,7 +36,11 @@
 									<source srcset="/img/Cart.svg" media="(min-width: 768px)">
 									<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
 								</picture>
-								<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+								{% if app.user.cart.products is defined %}
+									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ app.user.cart.products|length }}</span>
+								{% else %}
+									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+								{% endif %}
 								<span class="sr-only">items in cart, view bag</span>
 							</a>
 						</div>
@@ -61,13 +65,13 @@
 						aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
 						<div class="grid grid-cols-2 gap-x-4">
 							<div class="group relative text-sm">
+								{% if last_products[0].id is defined  %}
 								<div
 									class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
 									<img src="https://images.unsplash.com/photo-1646001943936-f1edc87d4ac5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
 										alt="New arrivals: Our latest digital assets for sale."
 										class="object-cover object-center">
 								</div>
-								{% if last_products[0].id is defined  %}
 								<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
 									<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 									New Arrivals
@@ -90,7 +94,6 @@
 									Currently Trending
 								</a>
 								{% endif %}
-
 								<p aria-hidden="true" class="mt-1">Discover</p>
 							</div>
 						</div>
@@ -287,20 +290,22 @@
 							</a>
 						</div>
 
-					<!-- Cart -->
-					{% if app.user.cart.id is defined %}
-					<div class="ml-4 flow-root lg:ml-6">
-						<a href="{{ path('front_app_cart_show') }}" class="group -m-2 flex items-center p-2">
-							<picture>
-								<source srcset="/img/Cart.svg" media="(min-width: 768px)">
-								<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
-							</picture>
-							{# TODO: Add Dynamic Product count in the cart #}
-							<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ app.user.cart.products|length }}</span>
-							<span class="sr-only">items in cart, view bag</span>
-						</a>
+						<!-- Cart -->
+						<div class="ml-4 flow-root lg:ml-6">
+							<a href="{{ path('front_app_cart_show') }}" class="group -m-2 flex items-center p-2">
+								<picture>
+									<source srcset="/img/Cart.svg" media="(min-width: 768px)">
+									<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
+								</picture>
+								{% if app.user.cart.products is defined %}
+									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ app.user.cart.products|length }}</span>
+								{% else %}
+									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+								{% endif %}
+								<span class="sr-only">items in cart, view bag</span>
+							</a>
+						</div>
 					</div>
-					{% endif %}
 				</div>
 			</div>
 		</nav>
