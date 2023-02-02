@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\CallbackTransformer;
-
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdminRegistrationFormType extends AbstractType
 {
@@ -37,6 +37,13 @@ class AdminRegistrationFormType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer l\'image',
+                //'download_link' => false,
+                'download_label' => 'Télécharger l\'image',
+            ])
         ;
 
         $builder->get('roles')
