@@ -18,6 +18,8 @@ class UpdateEmployeeFormType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('firstname')
+            ->add('lastname')
             ->add('roles', ChoiceType::class, [
                 'required' => true,
                 'multiple' => false,
@@ -33,6 +35,12 @@ class UpdateEmployeeFormType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'delete_label' => 'Supprimer l\'image',
+            ])
            
         ;
 

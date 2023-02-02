@@ -23,7 +23,7 @@ class TeamController extends AbstractController
     }
 
     
-    #[Route('/team/edit/{id}', name: 'app_team_edit')]
+    #[Route('/team/{id}/edit', name: 'app_team_edit')]
     public function editOne(Employee $employee, EmployeeRepository $employeeRepository, Request $request): Response
     {
         
@@ -31,8 +31,6 @@ class TeamController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            dd($form->getData());
             $employeeRepository->save($employee, true);
             $this->addFlash('success', 'Employee updated!');
             return $this->redirectToRoute('admin_app_team');
