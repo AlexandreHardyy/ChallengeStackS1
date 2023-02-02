@@ -284,17 +284,17 @@
 							</a>
 						</div>
 
-						<!-- Cart -->
-						<div class="ml-4 flow-root lg:ml-6">
-							<a href="#" class="group -m-2 flex items-center p-2">
-								<picture>
-									<source srcset="/img/Cart.svg" media="(min-width: 768px)">
-									<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
-								</picture>
-								<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-								<span class="sr-only">items in cart, view bag</span>
-							</a>
-						</div>
+					<!-- Cart -->
+					<div class="ml-4 flow-root lg:ml-6">
+						<a href="{{ path('front_app_cart_show', {'id': app.user.cart.id}) }}" class="group -m-2 flex items-center p-2">
+							<picture>
+								<source srcset="/img/Cart.svg" media="(min-width: 768px)">
+								<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
+							</picture>
+							{# TODO: Add Dynamic Product count in the cart #}
+							<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ app.user.cart.products|length }}</span>
+							<span class="sr-only">items in cart, view bag</span>
+						</a>
 					</div>
 				</div>
 			</div>
