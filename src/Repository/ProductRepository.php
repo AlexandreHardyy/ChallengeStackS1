@@ -39,6 +39,7 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    // Get the given number of products from the database in descending order
     public function getLastProducts(int $limit = 10): array
     {
         return $this->createQueryBuilder('p')
