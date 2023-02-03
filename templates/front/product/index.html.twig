@@ -1,37 +1,84 @@
-<!DOCTYPE html>
-
-<title>Product index</title>
+{% extends 'front_base.html.twig' %}
 
 {% block body %}
-    <h1>Product index</h1>
+<main>
+	<!-- Category section -->
+	<section aria-labelledby="category-heading" class="bg-gray-50">
+		<div class="relative bg-slate-100 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
+			<label class="block uppercase tracking-wide text-gray-700 text-2xl font-bold mb-2 text-center pb-4">
+				Discover our Digital Assets and enhance your experience
+			</label>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>title</th>
-                <th></th>
-                <th>price</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.title }}</td>
-                <td><img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}"></td>
-                <td>{{ product.price }}</td>
-                <td>
-                    <a href="{{ path('front_app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('front_app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+			<input class="rounded-full border-gray-300 bg-white focus:outline-none w-full py-4 px-8"
+			type="search" name="search" placeholder="Forest 2D, Pixel art">
+		</div>
+	</section>
 
-    <a href="{{ path('front_app_product_new') }}">Create new</a>
+	<!-- Favorites section -->
+	<section aria-labelledby="favorites-heading">
+		<div class="mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+			<div class="sm:flex sm:items-baseline sm:justify-between">
+				<h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">
+					{{ products|length }} Digital Assets
+				</h2>
+				<a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+					Browse more assets
+					<span aria-hidden="true"> &rarr;</span>
+				</a>
+			</div>
+
+			<!-- Temporary link -->
+			<a href="{{ path('front_app_product_new') }}">Create new</a>
+
+			<div class="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-4 sm:gap-y-4 sm:gap-x-6 lg:gap-x-8">
+
+			{% for product in products %}
+				<div class="group relative">
+					<div class="h-48 w-full overflow-hidden rounded-lg group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-2 sm:h-auto">
+						<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}"
+							class="h-full w-full object-cover object-top" />
+					</div>
+					<h3 class="mt-4 text-base font-semibold text-gray-900">
+						<a href={{ path('front_app_product_show', {'id': product.id})  }}>
+							<span class="absolute inset-0"></span>
+							{{ product.title }}
+						</a>
+					</h3>
+					<p class="mt-1 text-sm text-gray-500">${{product.price}}</p>
+				</div>
+			{% endfor %}
+
+			<div class="mt-6 sm:hidden">
+				<a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+					Browse all favorites
+					<span aria-hidden="true"> &rarr;</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Featured section -->
+	<section aria-labelledby="cause-heading">
+		<div class="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
+			<div class="absolute inset-0 overflow-hidden">
+				<img src="https://tailwindui.com/img/ecommerce-images/home-page-03-feature-section-full-width.jpg"
+					alt="" class="h-full w-full object-cover object-center">
+			</div>
+			<div aria-hidden="true" class="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
+			<div class="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+				<blockquote class="font-semibold text-center text-3xl tracking-tight text-white sm:text-3xl">
+					<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-emerald-500 relative inline-block px-2">
+						<span class="relative text-white">Save 20%</span>
+					</span>
+					on our entire catalogue with a membership
+				</blockquote>
+					<p class="text-white mt-4">Subscribe and download unlimited content</p>
+				<a href="#"
+					class="mt-8 block w-full rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto">Start now!</a>
+			</div>
+		</div>
+	</section>
+
+
+</main>
 {% endblock %}

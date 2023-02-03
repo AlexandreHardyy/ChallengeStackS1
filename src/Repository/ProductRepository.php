@@ -39,6 +39,7 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    // Get the given number of products from the database in descending order
     public function getLastProducts(int $limit = 10): array
     {
         return $this->createQueryBuilder('p')
@@ -49,9 +50,6 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
 
-
-    // Loop X times until limit is reached and add random products to array to return
-    // Without using RAND() or RANDOM() in SQL
     public function getRandomProducts(int $limit = 10): array
     {
         $products = [];
