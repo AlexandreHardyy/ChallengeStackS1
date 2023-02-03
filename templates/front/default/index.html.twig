@@ -13,8 +13,8 @@
         <div class="absolute h-full md:left-0 md:right-0 md:w-48 md:m-auto flex md:items-center right-0 items-start w-24">
             <img src="{{ asset('assets/icons_arts_verticals.png') }}" class="object-cover"/>
         </div>
-      <aside class="w-1/2 flex-1 hidden md:block">
-        <img class="min-h-full max-h-full object-cover" src="{{ asset('assets/joconde.png') }}" />
+      <aside class=" flex-1 hidden md:block">
+        <img class="min-h-full  w-full max-h-full max-w-full object-cover" src="{{ asset('assets/joconde.png') }}" />
       </aside>
     </section>
     <section class="flex flex-col items-center p-8 overflow-hidden">
@@ -131,7 +131,7 @@
             <div class="mt-8 max-w-[850px] xs w-full grid grid-cols-1 gap-x-6 gap-y-7 md:grid-cols-2 md:place-items-start place-items-center">
 
                 {% for product in five_last_products %}
-                    <a href="#" class="hover:opacity-75 hover:-translate-y-2 transition-all">
+                    <a href="{{ path('front_app_product_show', {id:product.id}) }}" class="hover:opacity-75 hover:-translate-y-2 transition-all">
                         <article class="bg-main-blue w-96 h-44 flex p-3 rounded-[12px] border flex justify-between">
                             <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
                                 <div>
