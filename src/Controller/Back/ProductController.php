@@ -19,7 +19,7 @@ class ProductController extends AbstractController
     PaginatorInterface $paginator,
     Request $request): Response
     {
-        $data = $productRepository->findAll();
+        $data = $productRepository->findBy([], ['id' => 'DESC']);
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -32,37 +32,45 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         return $this->render('back/product/show.html.twig', [
             'product' => $product,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    #[Route('/{id}/ban', name: 'app_product_ban', methods: ['GET'])]
+    public function ban(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if($product->isIsBanned() == true){
+            $product->setIsBanned(false);
             $productRepository->save($product, true);
+            $this->addFlash('success', 'Product unbanned successfully');
+            return $this->redirectToRoute('admin_app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
+        $product->setIsBanned(true);
+        $productRepository->save($product, true);
 
+        $this->addFlash('warning', 'Product banned successfully');
+
+        return $this->redirectToRoute('admin_app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{id}/verify', name: 'app_product_verify', methods: ['GET'])]
+    public function verify(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
+
+        if($product->isIsValid() == true){
+            $this->addFlash('success', 'Product already verified');
             return $this->redirectToRoute('admin_app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
+        $product->setIsValid(true);
+        $productRepository->save($product, true);
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product, true);
-        }
+        $this->addFlash('success', 'Product verified successfully');
 
         return $this->redirectToRoute('admin_app_product_index', [], Response::HTTP_SEE_OTHER);
     }

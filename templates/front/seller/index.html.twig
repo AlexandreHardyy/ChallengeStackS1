@@ -1,0 +1,24 @@
+{% extends 'front_base.html.twig' %}
+
+{% block body %}
+<div>
+    {% if is_granted('ROLE_SELLER') %}
+        <h1 class="text-3xl font-bold text-center py-8">Dashboard</h1>
+        <h2 class="text-xl py-4 px-20 font-bold">Mes publications - {{ myProducts|length }}</h2>
+        <div class="flex gap-12 px-20">
+            {% for product in myProducts %}
+                    <div class="p-4 bg-stone-100 w-64 rounded-md flex flex-col justify-between gap-5">
+                        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
+                        <div class="text-center font-bold">{{ product.title }}</div>
+                    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1 class="text-3xl font-bold text-center py-8">Become Seller</h1>
+        {{ form_start(form, {'attr': {'class': 'flex flex-col px-20 justify-center'}}) }}
+        {{ form_row(form.description, {'attr': {'class': 'flex flex-col'}}) }}
+        <button class="mt-6 px-4 py-2 rounded-md w-64 bg-emerald-600 text-white hover:bg-emerald-700">{{ button_label|default('Envoyer la demande') }}</button>
+        {{ form_end(form) }}
+    {% endif %}
+</div>
+{% endblock %}

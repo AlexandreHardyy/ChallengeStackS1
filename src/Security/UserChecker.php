@@ -3,7 +3,6 @@
 namespace App\Security;
 
 use App\Entity\User as AppUser;
-use App\Entity\Employee as AppEmployee;
 use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -13,32 +12,26 @@ class UserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void
     {
-        if (!$user instanceof AppUser || !$user instanceof AppEmployee) {
+        if (!$user instanceof AppUser) {
             return;
         }
 
         if (!$user->isVerified()) {
             // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException('Please verify your email address.');
-        }
-
-        
-        if ($user->isDeleted()) {
-            // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
+            // throw new CustomUserMessageAccountStatusException('Please verify your email address.');
         }
     }
 
     
     public function checkPostAuth(UserInterface $user): void
     {
-        if (!$user instanceof AppUser || !$user instanceof AppEmployee) {
+        if (!$user instanceof AppUser) {
             return;
         }
 
-        // user account is expired, the user may be notified
-        if ($user->isExpired()) {
-            throw new AccountExpiredException('...');
+        if (!$user->isVerified()) {
+            // the message passed to this exception is meant to be displayed to the user
+            throw new CustomUserMessageAccountStatusException('Your account has been disabled.');
         }
     }
 }
