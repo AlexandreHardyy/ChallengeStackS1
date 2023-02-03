@@ -28,6 +28,7 @@
 							</a>
 						</div>
 
+						{% if app.user.cart.products is defined %}
 						<!-- Cart -->
 						<div class="ml-4 lg:ml-6">
 							<a href="#" class="group flex items-center p-2 justify-end">
@@ -44,6 +45,7 @@
 								<span class="sr-only">items in cart, view bag</span>
 							</a>
 						</div>
+						{% endif %}
 					</div>
 				</div>
 
@@ -138,7 +140,7 @@
 								<a href="{{ path('front_app_login') }}" class="-m-2 inline-block p-2 text-gray-500">Login</a>
 							</div>
 							<div class="ml-4 lg:ml-6">
-								<a href="{{ path('front_app_register') }}" class="-m-2 p-2 text-gray-500 flex justify-end">Sign in</a>
+								<a href="{{ path('front_app_register') }}" class="-m-2 p-2 text-gray-500 flex justify-end">Sign up</a>
 							</div>
 						{% endif %}
 					</div>
@@ -274,7 +276,7 @@
 								<a href="{{ path('front_app_login') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Login</a>
 							</div>
 							<div class="flow-root">
-								<a href="{{ path('front_app_register') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</a>
+								<a href="{{ path('front_app_register') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign up</a>
 							</div>
 						{% endif %}
 
@@ -290,6 +292,7 @@
 							</a>
 						</div>
 
+						{% if app.user.cart.products is defined %}
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
 							<a href="{{ path('front_app_cart_show') }}" class="group -m-2 flex items-center p-2">
@@ -297,14 +300,11 @@
 									<source srcset="/img/Cart.svg" media="(min-width: 768px)">
 									<img class="h-8 w-8" src="/img/Cart.svg" alt="Search">
 								</picture>
-								{% if app.user.cart.products is defined %}
 									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ app.user.cart.products|length }}</span>
-								{% else %}
-									<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-								{% endif %}
 								<span class="sr-only">items in cart, view bag</span>
 							</a>
 						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
