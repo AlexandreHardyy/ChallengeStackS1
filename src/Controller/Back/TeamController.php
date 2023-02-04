@@ -9,10 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\UpdateEmployeeFormType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 
 class TeamController extends AbstractController
 {
+   
     #[Route('/team', name: 'app_team')]
     public function index(EmployeeRepository $employeeRepository): Response
     {
@@ -23,7 +26,9 @@ class TeamController extends AbstractController
     }
 
     
+   
     #[Route('/team/{id}/edit', name: 'app_team_edit')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function editOne(Employee $employee, EmployeeRepository $employeeRepository, Request $request): Response
     {
         
@@ -40,8 +45,9 @@ class TeamController extends AbstractController
             'updateEmployeeForm' => $form
         ]);
     }
-
+    
     #[Route('/team/banned/{id}', name: 'app_team_banned')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function bannedOne(Employee $employee, EmployeeRepository $employeeRepository): Response
     {
         if($employee->isIsBanned() == true)
