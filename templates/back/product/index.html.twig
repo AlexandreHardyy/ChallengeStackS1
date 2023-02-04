@@ -58,7 +58,9 @@
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <a href="{{ path('admin_app_product_show', {'id': product.id}) }}" class="text-indigo-600 hover:text-indigo-900">show</a>
-                  <a href="{{ path('admin_app_product_verify', {'id': product.id}) }}" class="text-indigo-600 hover:text-indigo-900">validate</a>
+                  {% if product.isValid == false %}
+                    <a href="{{ path('admin_app_product_verify', {'id': product.id}) }}" class="text-indigo-600 hover:text-indigo-900">validate</a>
+                  {% endif %}
                 </td>
               </tr>
               {% else %}
