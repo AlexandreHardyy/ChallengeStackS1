@@ -28,8 +28,9 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[IsGranted('ROLE_ADMIN')]
+    
     #[Route('/team/add', name: 'app_register')]
+    #[Security("is_granted('ROLE_ADMIN')")]
     public function register(Request $request, 
     UserAuthenticatorInterface $userAuthenticator, 
     AppCustomAuthenticator $authenticator, 
