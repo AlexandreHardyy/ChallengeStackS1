@@ -7,6 +7,10 @@
 
 log
 
+basicauth /* {
+	Charles $2a$14$sZwrwXEhJCjo650sRbGq/.oVtY39oMoQGclnGJxoQWQv7CmTaWdEu
+}
+
 route {
     root * /srv/app/public
     mercure {
