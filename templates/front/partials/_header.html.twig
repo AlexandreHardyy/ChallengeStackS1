@@ -56,10 +56,13 @@
 							<div class="flow-root">
 								<a href="{{ path('front_app_product_index') }}" class="-m-2 block p-2 font-medium text-gray-900">Browse</a>
 							</div>
+							{% if app.user %}
 							<div class="flow-root">
-								{# TODO: Add Sellers Route #}
-								<a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sellers</a>
+								<a href="{{ path('front_app_seller') }}"
+									class="-m-2 block p-2 font-medium text-gray-900">Sellers
+								</a>
 							</div>
+							{% endif %}
 						</div>
 					</div>
 
@@ -268,6 +271,9 @@
 					<div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
 
 						{% if is_granted('ROLE_USER') %}
+							<div class="flow-root">
+								<a href="{{ path('front_app_user_account') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">My account</a>
+							</div>
 							<div class="flow-root">
 								<a href="{{ path('front_app_logout') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Logout</a>
 							</div>

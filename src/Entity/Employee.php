@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 #[ORM\Table(name: '`employee`')]
@@ -55,7 +56,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -116,7 +117,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
@@ -214,6 +215,13 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function setProfileImageName(?UploadedFile $profileImage = null): self
+    {
+        $this->imageName = $profileImage ? $profileImage->getClientOriginalName() : null;
+
+        return $this;
     }
 
 }
