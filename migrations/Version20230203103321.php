@@ -24,7 +24,6 @@ final class Version20230203103321 extends AbstractMigration
         $this->addSql('CREATE TABLE "order" (id INT NOT NULL, owner_id INT NOT NULL, total_paid DOUBLE PRECISION NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_F52993987E3C61F9 ON "order" (owner_id)');
         $this->addSql('ALTER TABLE "order" ADD CONSTRAINT FK_F52993987E3C61F9 FOREIGN KEY (owner_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE employee ADD image_name VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
@@ -34,6 +33,5 @@ final class Version20230203103321 extends AbstractMigration
         $this->addSql('DROP SEQUENCE "order_id_seq" CASCADE');
         $this->addSql('ALTER TABLE "order" DROP CONSTRAINT FK_F52993987E3C61F9');
         $this->addSql('DROP TABLE "order"');
-        $this->addSql('ALTER TABLE "employee" DROP image_name');
     }
 }
