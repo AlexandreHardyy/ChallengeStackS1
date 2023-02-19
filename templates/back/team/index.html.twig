@@ -87,7 +87,7 @@
                     </a>
                   </td>
                 {% endif %} 
-                {% if app.user.roles[0] is same as("ROLE_ADMIN") %}
+                
                   {% if employee.roles[0] is same as("ROLE_ADMIN") %}
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <a href="#" class="text-indigo-400 hover:text-indigo-500">Not editable</a>
@@ -97,10 +97,7 @@
                       <a href="{{ path('admin_app_team_edit', {'id': employee.id}) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                     </td>
                   {% endif %}
-                {% endif %}
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Not editable</a>
-                </td>
+               
               </tr>
 
             {% else %}
