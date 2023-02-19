@@ -1,22 +1,41 @@
 {% extends 'front_base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-3xl w-screen px-48 pt-4"><span class="font-bold">Panier</span> - {{ app.user.cart.products|length }} produit(s)</h1>
+    <h1 class="text-3xl w-screen pt-4"><span class="font-bold">Panier</span> - {{ app.user.cart.products|length }} produit(s)</h1>
 
-    <div class="flex flex-col w-screen px-24 py-8">
-        {% for item in cart.products %}
-            <div class="flex justify-between items-center bg-stone-100 px-24 py-4 rounded-md mb-4">
-                <div>
-                    <img class="h-20 w-20 object-cover w-full overflow-hidden rounded-lg" src="{{ vich_uploader_asset(item, 'imageFile') }}" alt="{{ item.title }}">
-                </div>
-                <div class="pt-2 font-bold">{{ item.title }}</div>
-                <div class="text-left"><span class="text-gray-500 flex-auto">Price : </span>{{ item.price }} $</div>
-                <div>{{ include('front/cart/_delete_form.html.twig') }}</div>
-            </div>
-        {% else %}
-            <div>
-                <span>Aucun produit</span>
-            </div>
-        {% endfor %}
+    <div class="px-7">
+        <h1 class=" w-screen pt-4 font-bungee-inline lg:text-3xl md:text-2xl text-2xl">Votre panier</h1>
+        <span class="text-main-grey font-lato md:text-[16px] text-xs mb-4 block max-w-sm" >Vérifiez votre commande pour ne pas faire d'érreur lors de votre achat.</span>
+    {% if cart.products|length > 0  %}
+
+        <div class="px-2 flex md:flex-row gap-12 flex-col h-full">
+            <aside class="min-h-44 flex-1 bg-gray-50 p-5 border rounded-lg">
+                {% for item in cart.products %}
+                    <article class="flex justify-between py-3">
+                        <div class="flex gap-x-3">
+                            <img src="{{ vich_uploader_asset(item, 'imageFile') }}" class="w-28 h-24 object-cover block rounded-lg border" />
+                            <div class="flex flex-col justify-between py-1">
+                                <div>
+                                    <h4 class="font-lato font-black text-[17px]">{{ item.title }}</h4>
+                                    <span class="font-lato text-gray-500 text-[15px] py-1">Personnal license</span>
+                                </div>
+                                <span class="font-lato font-black text-[18px]">{{ item.price }} €</span>
+                            </div>
+                        </div>
+                        {{ include('front/cart/_delete_form.html.twig') }}
+                    </article>
+                {% endfor %}
+            </aside>
+            <aside class="min-h-44 flex-1 bg-gray-50 p-5 border rounded-lg">
+
+            </aside>
+        </div>
+
+    {% else %}
+        <div>
+            <span>Aucun produit</span>
+        </div>
+    {% endif %}
     </div>
+
 {% endblock %}
