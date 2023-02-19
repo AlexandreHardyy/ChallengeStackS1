@@ -7,7 +7,7 @@
         {% for item in cart.products %}
             <div class="flex justify-between items-center bg-stone-100 px-24 py-4 rounded-md mb-4">
                 <div>
-                    <img class="h-20 w-20 object-cover w-full overflow-hidden rounded-lg" src="{{ vich_uploader_asset(item, 'imageFile') }}" alt="{{ item.title }}">
+                    <img class="h-20 object-cover w-full overflow-hidden rounded-lg" src="{{ vich_uploader_asset(item, 'imageFile') }}" alt="{{ item.title }}">
                 </div>
                 <div class="pt-2 font-bold">{{ item.title }}</div>
                 <div class="text-left"><span class="text-gray-500 flex-auto">Price : </span>{{ item.price }} $</div>

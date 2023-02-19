@@ -39,6 +39,16 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+    public function findProductsByUser($user)
+    {
+        $query = $this->createQueryBuilder('order')
+            ->select('order.id, order.owner_id, order.total_paid')
+            ->where('order.owner_id = :user')
+            ->setParameter('user', $user)
+            ->setMaxResults(10)
+            ->getQuery();
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

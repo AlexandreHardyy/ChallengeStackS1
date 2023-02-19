@@ -1,0 +1,113 @@
+{% extends 'front_base.html.twig' %}
+
+{% block body %}
+<main class="bg-gray-300 antialiased">
+    <h1 class="text-2xl font-bold text-center my-4">Manage your account</h1>
+
+    <div class="container mx-auto my-60 mt-8 w-4/6 md:w-5/6 lg:w-4/6 xl:w-3/6">
+        <div class="relative shadow rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 my-60 mt-8">
+            <div class="mt-16 bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto">
+                <div class="flex justify-between items-center py-5 px-6">
+                    <a href="#"
+                        class="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 border-2 mr-4">My
+                        account</a>
+
+                    {% if is_granted('ROLE_SELLER') %}
+                        {# TODO: Replace link to current user seller page #}
+                        <a href="{{ path('front_app_seller') }}"
+                            class="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 border-2 ml-4">My Seller page</a>
+                    {% else %}
+                        <a href="{{ path('front_app_seller') }}"
+                            class="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 border-2 ml-4">Become a Seller</a>
+                    {% endif %}
+                </div>
+
+                <!-- Cards container -->
+                <div class="h-full overflow-y-auto px-6 pb-6">
+                    <div class="container mx-auto grid">
+
+                        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+                            <!-- Card -->
+                            <a href={{ path('front_app_user_history') }} class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                                <div>
+                                    <p class="mb-2 font-medium text-gray-900">
+                                        Orders
+                                    </p>
+                                    <p class="font-semibold text-gray-400">
+                                        14
+                                    </p>
+                                </div>
+                            </a>
+
+                            <!-- Card -->
+                            <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                                <div>
+                                    <p class="mb-2 font-medium text-gray-900">
+                                        Fidelity points
+                                    </p>
+                                    <p class="font-semibold text-gray-400">
+                                        109
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card -->
+                            <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                                <div>
+                                    <p class="mb-2 font-medium text-gray-900">
+                                        Favorites
+                                    </p>
+                                    <p class="font-semibold text-gray-400">
+                                        7
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card -->
+                            <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                                <div>
+                                    <p class="mb-2 font-medium text-gray-900">
+                                        Coupons
+                                    </p>
+                                    <p class="font-semibold text-gray-400">
+                                        4
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full">
+                    <h3 class="font-medium text-gray-900 text-left px-6">Recent activites</h3>
+
+                    <div class="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
+                        <a href="#"
+                            class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150">
+                            <picture>
+                                <source srcset="/img/Plus.svg" media="(min-width: 768px)">
+                                <img class="h-6 w-6 rounded-full shadow-md inline-block ml-6" src="/img/Plus.svg" alt="Activity">
+                            </picture>
+
+                            <span class="text-gray-900 px-3">Added [Product] in your cart</span>
+                            <span class="text-gray-500 text-xs">4 sec ago</span>
+                        </a>
+
+                        <a href="#"
+                            class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150">
+                            <picture>
+                                <source srcset="/img/Plus.svg" media="(min-width: 768px)">
+                                <img class="h-6 w-6 rounded-full shadow-md inline-block ml-6" src="/img/Plus.svg" alt="Activity">
+                            </picture>
+
+                            <span class="text-gray-900 px-3">Added item in favorites</span>
+                            <span class="text-gray-500 text-xs">24 min ago</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
