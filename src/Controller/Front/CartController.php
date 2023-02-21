@@ -5,14 +5,12 @@ namespace App\Controller\Front;
 use App\Entity\Cart;
 use App\Entity\Product;
 use App\Repository\CartRepository;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Controller\Front\CartController;
 use App\Entity\Order;
 use App\Entity\OrderDetails;
 
@@ -23,12 +21,9 @@ class CartController extends AbstractController
     public function fake(EntityManagerInterface $em): Response
     {
         $cart = $this->getUser()->getCart();
+        $total = 0;
 
         $order = new Order();
-        $order->setOwner($this->getUser());
-        $order->setTotalPaid(200);
-        $order->setCreatedAt(new \DateTime());
-        $order->setUpdatedAt(new \DateTime());
 
         // Loop through products in cart and add them to order
         foreach ($cart->getProducts() as $product) {
@@ -36,6 +31,7 @@ class CartController extends AbstractController
             $orderDetail->setOrderId($order);
             $orderDetail->setProductId($product);
             $orderDetail->setPrice($product->getPrice());
+            $total += $product->getPrice();
             $em->persist($orderDetail);
 
             // Remove product from cart
@@ -43,10 +39,13 @@ class CartController extends AbstractController
             $em->persist($cart);
         }
 
+        $order->setOwner($this->getUser());
+        $order->setTotalPaid($total);
+        $order->setCreatedAt(new \DateTime());
+        $order->setUpdatedAt(new \DateTime());
+
         $em->persist($order);
         $em->flush();
-
-        dd($order->getOrderDetails());
 
         return $this->render('front/user_account/history.html.twig', [
             'orders' => $order->getOrderDetails(),
