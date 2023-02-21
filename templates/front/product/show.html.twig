@@ -197,10 +197,6 @@
     </div>
 </main>
 
-<a href="{{ path('front_app_product_index') }}">Back to list</a>
-<a href="{{ path('front_app_product_edit', {'id': product.id}) }}">Edit</a>
-<a href="{{ path('front_app_cart_new', {'id': product.id}) }}">Ajouter au panier</a>
-
 {{ include('front/product/_delete_form.html.twig') }}
 
 {# <table class="table">
