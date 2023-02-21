@@ -12,9 +12,47 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Controller\Front\CartController;
+use App\Entity\Order;
+use App\Entity\OrderDetails;
+
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+    #[Route('/fake', name: 'app_cart_fake', methods: ['GET'])]
+    public function fake(EntityManagerInterface $em): Response
+    {
+        $cart = $this->getUser()->getCart();
+
+        $order = new Order();
+        $order->setOwner($this->getUser());
+        $order->setTotalPaid(200);
+        $order->setCreatedAt(new \DateTime());
+        $order->setUpdatedAt(new \DateTime());
+
+        // Loop through products in cart and add them to order
+        foreach ($cart->getProducts() as $product) {
+            $orderDetail = new OrderDetails();
+            $orderDetail->setOrderId($order);
+            $orderDetail->setProductId($product);
+            $orderDetail->setPrice($product->getPrice());
+            $em->persist($orderDetail);
+
+            // Remove product from cart
+            $cart->removeProduct($product);
+            $em->persist($cart);
+        }
+
+        $em->persist($order);
+        $em->flush();
+
+        dd($order->getOrderDetails());
+
+        return $this->render('front/user_account/history.html.twig', [
+            'orders' => $order->getOrderDetails(),
+        ]);
+    }
+
     #[Route('/', name: 'app_cart_show', methods: ['GET'])]
     public function show(): Response
     {
