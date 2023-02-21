@@ -9,8 +9,8 @@
         <div class="flex gap-12 px-20">
             {% for product in myProducts %}
                 <a href="{{ path('front_app_product_edit', {'id': product.id}) }}">
-                    <div class="p-4 bg-stone-100 w-64 rounded-md flex flex-col justify-between gap-5">
-                        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
+                    <div class="p-4 bg-stone-100 w-64 h-80 rounded-md flex flex-col justify-between gap-5">
+                        <img class="h-4/5 object-cover object-top" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
                         <div class="text-center font-bold">{{ product.title }}</div>
                     </div>
                 </a>
