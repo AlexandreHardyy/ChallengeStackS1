@@ -29,11 +29,10 @@ class UserAccountController extends AbstractController
 
         // Check if the user has orders in the database
         $orders = $orderRepository->findBy(['Owner' => $user]);
-        $ordersDetails = [];
-        foreach ($orders as $order) {
-            $ordersDetails[] = $orderRepository->findOrderWithProducts($order->getId());
-        }
-        dd($ordersDetails);
+        /*foreach ($orders as $order) {
+         $orderRepository->findOrderWithProducts($order->getId());
+        }*/
+        //dd($ordersDetails);
 
         return $this->render('front/user_account/history.html.twig', [
             'orders' => $orders,
