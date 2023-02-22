@@ -13,11 +13,11 @@ class OrderDetails
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderDetails')]
+    #[ORM\ManyToOne(inversedBy: 'orderDetails', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $orderId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderDetails')]
+    #[ORM\ManyToOne(inversedBy: 'orderDetails', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $productId = null;
 
