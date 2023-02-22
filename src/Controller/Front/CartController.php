@@ -3,6 +3,8 @@
 namespace App\Controller\Front;
 
 use App\Entity\Cart;
+use App\Entity\OrderHistory;
+use App\Entity\OrderState;
 use App\Entity\Product;
 use App\Repository\CartRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +26,8 @@ class CartController extends AbstractController
         $total = 0;
 
         $order = new Order();
+        $orderHistory = new OrderHistory();
+        $status = $em->getRepository(OrderState::class)->find(1);
 
         // Loop through products in cart and add them to order
         foreach ($cart->getProducts() as $product) {
@@ -43,8 +47,12 @@ class CartController extends AbstractController
         $order->setTotalPaid($total);
         $order->setCreatedAt(new \DateTime());
         $order->setUpdatedAt(new \DateTime());
+        $orderHistory->setOrders($order);
+        $orderHistory->setState($status);
+        $orderHistory->setTimestamp(new \DateTime());
 
         $em->persist($order);
+        $em->persist($orderHistory);
         $em->flush();
 
         return $this->render('front/user_account/history.html.twig', [

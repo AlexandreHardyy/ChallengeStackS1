@@ -63,6 +63,19 @@ class OrderRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findOrderWithProductsAndHistory(int $orderId): ?Order
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o, od, p, oh')
+            ->innerJoin('o.orderDetails', 'od')
+            ->innerJoin('od.productId', 'p')
+            ->innerJoin('o.orderHistories', 'oh')
+            ->where('o.id = :orderId')
+            ->setParameter('orderId', $orderId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */
