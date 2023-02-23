@@ -26,6 +26,10 @@ final class Version20230221224743 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_D1C0D9005D83CC1 ON order_history (state_id)');
         $this->addSql('CREATE INDEX IDX_D1C0D900CFFE9AD6 ON order_history (orders_id)');
         $this->addSql('CREATE TABLE order_state (id INT NOT NULL, state VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('INSERT INTO order_state (id, state) VALUES (1, \'VALIDATE\')');
+        $this->addSql('INSERT INTO order_state (id, state) VALUES (2, \'REFUND\')');
+        $this->addSql('INSERT INTO order_state (id, state) VALUES (3, \'REFUND_PENDING\')');
+        $this->addSql('INSERT INTO order_state (id, state) VALUES (4, \'CANCEL\')');
         $this->addSql('ALTER TABLE order_history ADD CONSTRAINT FK_D1C0D9005D83CC1 FOREIGN KEY (state_id) REFERENCES order_state (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE order_history ADD CONSTRAINT FK_D1C0D900CFFE9AD6 FOREIGN KEY (orders_id) REFERENCES "order" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
