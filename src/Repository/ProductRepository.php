@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Services\StripeService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Stripe\Exception\ApiErrorException;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -16,11 +18,30 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    /**
+     * @var StripeService
+     */
+    protected StripeService $stripeService;
+
+    /**
+     * @param ManagerRegistry $registry
+     * @param StripeService $stripeService
+     */
+    public function __construct(
+        ManagerRegistry $registry,
+        StripeService $stripeService
+    )
     {
+        $this->stripeService = $stripeService;
         parent::__construct($registry, Product::class);
     }
 
+    /**
+     * @param Product $entity
+     * @param bool $flush
+     * @return void
+     */
     public function save(Product $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -65,6 +86,39 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         return $products;
+    }
+
+    /**
+     * @param Product $product
+     * @return string|null
+     * @throws ApiErrorException
+     */
+    public function getIntentSecret(array $products):string|null
+    {
+        $intent = $this->stripeService->paymentIntent($products);
+        return $intent['client_secret'] ?? null;
+    }
+
+    /**
+     * @param array $stripeParameters
+     * @param Product $product
+     * @return array|null
+     */
+    public function stripePayment(array $stripeParameters, Product $product): ?array
+    {
+        $resource = null;
+        $data = $this->stripeService->stripePayment($stripeParameters, $product);
+        if($data){
+            $data_ = $data['charges']['data'][0];
+            $resource = [
+                'stripeBrand'=> $data_['payment_method_details']['card']['brand'],
+                'stripeLast4'=> $data_['payment_method_details']['card']['last4'],
+                'stripeId'=> $data_['id'],
+                'stripeStatus'=> $data_['status'],
+                'stripeToken'=> $data_['client_secret'],
+            ];
+        }
+        return $resource;
     }
 
 //    /**

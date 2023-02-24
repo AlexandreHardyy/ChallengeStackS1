@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\StripeTrait;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    const CURRENT = 'eur';
+
+    use StripeTrait;
     use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]

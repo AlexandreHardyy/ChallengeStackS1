@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+    /**
+     * @throws ApiErrorException
+     */
     #[Route('/', name: 'app_cart_show', methods: ['GET'])]
-    public function show(): Response
+    public function show(ProductRepository $productRepository): Response
     {
         $cart = $this->getUser()->getCart();
         return $this->render('front/cart/show.html.twig', [
             'cart' => $cart,
+            'intent_secret'=> $productRepository->getIntentSecret()
         ]);
     }
 
