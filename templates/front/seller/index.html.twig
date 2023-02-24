@@ -1,12 +1,31 @@
 {% extends 'front_base.html.twig' %}
 
 {% block body %}
-<div>
+<div class="mx-20">
     {% if is_granted('ROLE_SELLER') %}
         <h1 class="text-3xl font-bold text-center py-8">Dashboard</h1>
-        <a class="mt-6 px-4 py-2 mx-20 rounded-md w-64 bg-emerald-600 text-white hover:bg-emerald-700" href="{{ path('front_app_product_new') }}">Create new</a>
-        <h2 class="text-xl py-4 mx-20 font-bold">Mes publications - {{ myProducts|length }}</h2>
-        <div class="flex gap-12 px-20">
+        <div class="mb-14">
+            <h2 class="text-2xl py-4 font-bold">Suivi des commandes</h2>
+            <div class="flex justify-between gap-12">
+                <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
+                    <div class="text-lg mb-4">Ventes réalisés</div>
+                    <div class="text-2xl font-bold">34</div>
+                </div>
+                <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
+                    <div class="text-lg mb-4">Revenu estimé</div>
+                    <div class="text-2xl font-bold">454.32 $</div>
+                </div>
+                <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
+                    <div class="text-lg mb-4">Evolution sur 7 jours</div>
+                    <div class="text-2xl font-bold">+ 22 %</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="text-2xl py-4 font-bold">Mes publications - {{ myProducts|length }}</h2>
+            <a class="px-4 py-2 rounded-md w-32 bg-emerald-600 text-white hover:bg-emerald-700" href="{{ path('front_app_product_new') }}">Create new</a>
+        </div>
+        <div class="flex gap-12 mt-8">
             {% for product in myProducts %}
                 <a href="{{ path('front_app_product_edit', {'id': product.id}) }}">
                     <div class="p-4 bg-stone-100 w-64 h-80 rounded-md flex flex-col justify-between gap-5">
@@ -18,7 +37,7 @@
         </div>
     {% else %}
         <h1 class="text-3xl font-bold text-center py-8">Become Seller</h1>
-        {{ form_start(form, {'attr': {'class': 'flex flex-col px-20 justify-center'}}) }}
+        {{ form_start(form, {'attr': {'class': 'flex flex-col justify-center'}}) }}
         {{ form_row(form.description, {'attr': {'class': 'flex flex-col'}}) }}
         <button class="mt-6 px-4 py-2 rounded-md w-64 bg-emerald-600 text-white hover:bg-emerald-700">{{ button_label|default('Envoyer la demande') }}</button>
         {{ form_end(form) }}
