@@ -67,6 +67,15 @@ class ProductRepository extends ServiceEntityRepository
         return $products;
     }
 
+    public function findByLast30Days() {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.createdAt >= :date')
+            ->setParameter('date', new \DateTime('-30 days'));
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
