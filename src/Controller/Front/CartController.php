@@ -123,7 +123,8 @@ class CartController extends AbstractController
             $em->persist($orderHistory);
             $em->flush();
 
-            return $this->redirect('/orders');;
+            $this->addFlash('success', 'Votre commande a bien été prise en compte');
+            return $this->redirect('/orders');
         } else{
             return $this->redirect('/cart', 500);
         }

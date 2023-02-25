@@ -27,7 +27,7 @@
         </div>
         <div class="flex gap-12 mt-8 max-md:flex-col max-md:justify-center max-md:items-center">
             {% for product in myProducts %}
-                <a href="{{ path('front_app_product_edit', {'id': product.id}) }}">
+                <a href="{{ path('front_app_product_edit', {'slug': product.slug}) }}">
                     <div class="p-4 bg-stone-100 w-64 h-80 rounded-md flex flex-col justify-between gap-5">
                         <img class="h-4/5 object-cover object-top" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
                         <div class="text-center font-bold">{{ product.title }}</div>

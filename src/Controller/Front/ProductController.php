@@ -45,6 +45,7 @@ class ProductController extends AbstractController
             $product->setIsValid(false);
             $productRepository->save($product, true);
 
+            $this->addFlash('success', 'Votre produit a bien été ajouté, il sera validé par un administrateur dans les plus brefs délais.');
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -54,7 +55,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    #[Route('/{slug}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
         return $this->render('front/product/show.html.twig', [
@@ -62,7 +63,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_SELLER')")]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {

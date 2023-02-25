@@ -29,6 +29,7 @@ class RefundController extends AbstractController
         $orderHistory->setTimestamp(new \DateTime());
         $orderHistoryRepository->save($orderHistory,true);
 
+        $this->addFlash('success', 'Votre demande de remboursement a bien été prise en compte.');
         return $this->redirectToRoute('front_app_user_history');
     }
 }
