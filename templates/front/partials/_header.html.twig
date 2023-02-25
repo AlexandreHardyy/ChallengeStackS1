@@ -19,7 +19,7 @@
 						<!-- Search -->
 						<div class="flex lg:ml-6">
 							<a href="#" class="text-gray-400 hover:text-gray-500">
-								<span class="sr-only">Search</span>
+								<span class="sr-only">{{ 'search'|trans }}</span>
 								<!-- Heroicon name: outline/magnifying-glass -->
 								<picture>
 									<source srcset="/img/Search.svg" media="(min-width: 768px)">
@@ -136,11 +136,11 @@
 					<div class="grid grid-cols-2 gap-x-4">
 						{% if is_granted('ROLE_USER') %}
 							<div class="group relative">
-								<a href="{{ path('front_app_logout') }}" class="-m-2 block p-2 text-gray-500">Logout</a>
+								<a href="{{ path('front_app_logout') }}" class="-m-2 block p-2 text-gray-500">{{ 'logout'|trans }}</a>
 							</div>
 						{% else %}
 							<div class="group relative">
-								<a href="{{ path('front_app_login') }}" class="-m-2 inline-block p-2 text-gray-500">Login</a>
+								<a href="{{ path('front_app_login') }}" class="-m-2 inline-block p-2 text-gray-500">{{ 'login'|trans }}</a>
 							</div>
 							<div class="ml-4 lg:ml-6">
 								<a href="{{ path('front_app_register') }}" class="-m-2 p-2 text-gray-500 flex justify-end">Sign up</a>
@@ -180,13 +180,13 @@
 					<div class="hidden lg:ml-8 lg:block lg:self-stretch">
 						<div class="flex h-full space-x-8">
 							<a href="{{ path('front_app_product_index') }}"
-								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Browse</a>
+								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{ 'browse'|trans }}</a>
 							<div x-data="{ menMenu: false }" class="flex">
 								<div class="relative flex">
 									<!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
 									<button @click="menMenu = !menMenu" type="button"
 										class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
-										aria-expanded="false">Categories</button>
+										aria-expanded="false">{{ 'categories'|trans }}</button>
 								</div>
 								<div x-show="menMenu" @click.away="menMenu = false"
 									class="absolute inset-x-0 top-full bg-white text-sm text-gray-500">
@@ -262,7 +262,7 @@
 
 							{% if app.user %}
 							<a href="{{ path('front_app_seller') }}"
-								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Sellers
+								class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{ 'seller'|trans }}
 							</a>
 							{% endif %}
 						</div>
@@ -272,14 +272,14 @@
 
 						{% if is_granted('ROLE_USER') %}
 							<div class="flow-root">
-								<a href="{{ path('front_app_user_account') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">My account</a>
+								<a href="{{ path('front_app_user_account') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">{{ 'my_account'|trans }}</a>
 							</div>
 							<div class="flow-root">
-								<a href="{{ path('front_app_logout') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Logout</a>
+								<a href="{{ path('front_app_logout') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">{{ 'logout'|trans }}</a>
 							</div>
 						{% else %}
 							<div class="flow-root">
-								<a href="{{ path('front_app_login') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Login</a>
+								<a href="{{ path('front_app_login') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">{{ 'login'|trans }}</a>
 							</div>
 							<div class="flow-root">
 								<a href="{{ path('front_app_register') }}" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign up</a>
@@ -289,7 +289,7 @@
 						<!-- Search -->
 						<div class="flex lg:ml-6">
 							<a href="#" class="p-2 text-gray-400 hover:text-gray-500">
-								<span class="sr-only">Search</span>
+								<span class="sr-only">{{ 'search'|trans }}</span>
 								<!-- Heroicon name: outline/magnifying-glass -->
 								<picture>
 									<source srcset="/img/Search.svg" media="(min-width: 768px)">
