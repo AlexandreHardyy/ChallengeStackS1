@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\StripeTrait;
+use Gedmo\Mapping\Annotation\Slug;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -34,6 +35,13 @@ class Order
 
     #[ORM\OneToMany(mappedBy: 'orders', targetEntity: OrderHistory::class)]
     private Collection $orderHistories;
+
+    #[ORM\Column(length: 255)]
+    #[Slug(fields: ['reference'])]
+    private ?string $slug = null;
+
+    #[ORM\Column(length: 15)]
+    private ?string $reference = null;
 
     public function __construct()
     {
@@ -126,6 +134,28 @@ class Order
                 $orderHistory->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): Order
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(): self
+    {
+        $this->reference = uniqid('PF');
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,16 +34,15 @@ class UserAccountController extends AbstractController
         ]);
     }
 
-    #[Route('/user/history/{id}', name: 'app_user_history_details', methods: ['GET'])]
+    #[Route('/user/history/{slug}', name: 'app_user_history_details', methods: ['GET'])]
     #[Security("is_granted('ROLE_USER')")]
-    public function manageProductsHistoryDetails(OrderRepository $orderRepository, Security $security, int $id): Response
+    public function manageProductsHistoryDetails(OrderRepository $orderRepository, Security $security, Order $order): Response
     {
         $user = $security->getUser();
-        $order = $orderRepository->find($id);
         if ($order->getOwner() !== $user) {
             return $this->redirectToRoute('app_user_history');
         }
-        $products = $orderRepository->findAllProductsByOrderId($id);
+        $products = $orderRepository->findAllProductsByOrderId($order->getId());
         return $this->render('front/user_account/history_details.html.twig', [
             'products' => $products,
             'order' => $order,
