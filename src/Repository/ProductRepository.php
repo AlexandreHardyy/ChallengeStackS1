@@ -107,7 +107,6 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param array $stripeParameters
-     * @param array $product
      * @return array|null
      * @throws ApiErrorException
      */
@@ -115,17 +114,36 @@ class ProductRepository extends ServiceEntityRepository
     {
         $resource = null;
         $data = $this->stripeService->stripePayment($stripeParameters);
-        if($data){
+        if ($data) {
             $data_ = $data['charges']['data'][0];
             $resource = [
-                'stripeBrand'=> $data_['payment_method_details']['card']['brand'],
-                'stripeLast4'=> $data_['payment_method_details']['card']['last4'],
-                'stripeId'=> $data_['id'],
-                'stripeStatus'=> $data_['status'],
-                'stripeToken'=> $data_['client_secret'],
+                'stripeBrand' => $data_['payment_method_details']['card']['brand'],
+                'stripeLast4' => $data_['payment_method_details']['card']['last4'],
+                'stripeId' => $data_['id'],
+                'stripeStatus' => $data_['status'],
+                'stripeToken' => $data_['client_secret'],
             ];
         }
         return $resource;
+    }
+
+    public function getProductsWithSearch(string $search, int $limit = 20): array {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.title LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }        
+
+    public function findByLast30Days() {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.createdAt >= :date')
+            ->setParameter('date', new \DateTime('-30 days'));
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

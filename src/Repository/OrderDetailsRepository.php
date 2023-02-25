@@ -39,6 +39,23 @@ class OrderDetailsRepository extends ServiceEntityRepository
         }
     }
 
+
+    // create a custom query from this SQL query: SELECT count(*) FROM order_details JOIN "product" o ON order_details.product_id_id = o.id WHERE o.creator_id = 1
+
+    public function findProductByUser($user)
+    {
+        $qb = $this->createQueryBuilder('od')
+            ->select('count(od.id)')
+            ->join('od.productId', 'p')
+            ->where('p.creator = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
+        return $qb;
+    }
+
+
 //    /**
 //     * @return OrderDetails[] Returns an array of OrderDetails objects
 //     */

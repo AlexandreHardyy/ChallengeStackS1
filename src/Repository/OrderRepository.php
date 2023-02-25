@@ -92,6 +92,16 @@ class OrderRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function findByLast30Days(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o.id, o.totalPaid, o.createdAt')
+            ->where('o.createdAt >= :date')
+            ->setParameter('date', new \DateTime('-30 days'));
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

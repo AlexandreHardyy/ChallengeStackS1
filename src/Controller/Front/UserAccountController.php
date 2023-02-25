@@ -27,15 +27,25 @@ class UserAccountController extends AbstractController
     {
         $user = $security->getUser();
 
-        // Check if the user has orders in the database
         $orders = $orderRepository->findBy(['Owner' => $user]);
-        /*foreach ($orders as $order) {
-         $orderRepository->findOrderWithProducts($order->getId());
-        }*/
-        //dd($ordersDetails);
-
         return $this->render('front/user_account/history.html.twig', [
             'orders' => $orders,
+        ]);
+    }
+
+    #[Route('/user/history/{id}', name: 'app_user_history_details', methods: ['GET'])]
+    #[Security("is_granted('ROLE_USER')")]
+    public function manageProductsHistoryDetails(OrderRepository $orderRepository, Security $security, int $id): Response
+    {
+        $user = $security->getUser();
+        $order = $orderRepository->find($id);
+        if ($order->getOwner() !== $user) {
+            return $this->redirectToRoute('app_user_history');
+        }
+        $products = $orderRepository->findAllProductsByOrderId($id);
+        return $this->render('front/user_account/history_details.html.twig', [
+            'products' => $products,
+            'order' => $order,
         ]);
     }
 }
