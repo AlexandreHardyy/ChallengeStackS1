@@ -75,7 +75,8 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->save($product, true);
 
-            return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Votre produit a bien été modifié.');
+            return $this->redirectToRoute('front_app_seller', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/product/edit.html.twig', [
@@ -92,6 +93,7 @@ class ProductController extends AbstractController
             $productRepository->remove($product, true);
         }
 
+        $this->addFlash('success', 'Votre produit a bien été supprimé.');
         return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
     }
 }
