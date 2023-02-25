@@ -15,10 +15,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ProductController extends AbstractController
 {
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
+        if ($request->query->get('search')) {
+            $search = $request->query->get('search');
+            $result = $productRepository->getProductsWithSearch($search);
+        } else {
+            $result = $productRepository->findAll();
+        }
+
         return $this->render('front/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $result,
             'last_products' => $productRepository->getLastProducts(1),
         ]);
     }

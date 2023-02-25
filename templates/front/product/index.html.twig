@@ -8,9 +8,11 @@
 			<label class="block uppercase tracking-wide text-gray-700 text-2xl font-bold mb-2 text-center pb-4">
 				Discover our Digital Assets and enhance your experience
 			</label>
-
-			<input class="rounded-full border-gray-300 bg-white focus:outline-none w-full py-4 px-8"
-			type="search" name="search" placeholder="Forest 2D, Pixel art">
+			<form class="relative">
+				<input class="rounded-full border-gray-300 bg-white focus:outline-none w-full py-4 px-8"
+				type="search" name="search" placeholder="Forest 2D, Pixel art">
+				<input class="py-4 px-8 bg-emerald-400 rounded-full cursor-pointer absolute right-0 top-0 border border-emerald-400 text-white font-bold hover:bg-emerald-600 hover:border-emerald-600 transition" value="Chercher" type="submit">
+			</form>
 		</div>
 	</section>
 
@@ -29,27 +31,28 @@
 
 			<div class="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-4 sm:gap-y-4 sm:gap-x-6 lg:gap-x-8">
 
-			{% for product in products %}
-				<div class="group relative">
-					<div class="h-48 w-full overflow-hidden rounded-lg group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-2 sm:h-auto">
-						<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}"
-							class="h-full w-full object-cover object-top" />
+				{% for product in products %}
+					<div class="group relative">
+						<div class="h-48 w-full overflow-hidden rounded-lg group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-2 sm:h-auto">
+							<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}"
+								class="h-full w-full object-cover object-top" />
+						</div>
+						<h3 class="mt-4 text-base font-semibold text-gray-900">
+							<a href={{ path('front_app_product_show', {'id': product.id})  }}>
+								<span class="absolute inset-0"></span>
+								{{ product.title }}
+							</a>
+						</h3>
+						<p class="mt-1 text-sm text-gray-500">${{product.price}}</p>
 					</div>
-					<h3 class="mt-4 text-base font-semibold text-gray-900">
-						<a href={{ path('front_app_product_show', {'id': product.id})  }}>
-							<span class="absolute inset-0"></span>
-							{{ product.title }}
-						</a>
-					</h3>
-					<p class="mt-1 text-sm text-gray-500">${{product.price}}</p>
-				</div>
-			{% endfor %}
+				{% endfor %}
 
-			<div class="mt-6 sm:hidden">
-				<a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-					Browse all favorites
-					<span aria-hidden="true"> &rarr;</span>
-				</a>
+				<div class="mt-6 sm:hidden">
+					<a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+						Browse all favorites
+						<span aria-hidden="true"> &rarr;</span>
+					</a>
+				</div>
 			</div>
 		</div>
 	</section>
