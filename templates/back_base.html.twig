@@ -89,17 +89,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
+                                <a href="{{ path("admin_app_order") }}" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
                                     <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out"></span>
                                     <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current"><path d="M5 19h15a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1V4a1 1 0 0 1 2 0v15Z" fill="currentColor"></path><path opacity=".3" d="M8.73 14.684a1 1 0 1 1-1.46-1.368l3.75-4a1 1 0 0 1 1.38-.077l2.959 2.526 3.856-4.885a1 1 0 1 1 1.57 1.24l-4.5 5.7a1 1 0 0 1-1.434.14l-3.024-2.58-3.097 3.304Z" fill="currentColor"></path></svg>
                                     <span>Orders</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
+                                <a href="{{ path('admin_app_seller') }}" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
                                     <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out"></span>
                                     <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current"><path opacity=".3" d="M21 22H3c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1h18c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1Z" fill="currentColor"></path><path d="M6 6c-.6 0-1-.4-1-1V3c0-.6.4-1 1-1s1 .4 1 1v2c0 .6-.4 1-1 1Zm5-1V3c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1Zm4 0V3c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1Zm4 0V3c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1ZM8.8 13.1c.4 0 .7-.1.9-.3.2-.2.4-.5.4-.9 0-.3-.1-.6-.3-.8-.2-.2-.5-.3-.8-.3-.2 0-.4 0-.6.1-.2.1-.3.2-.4.3-.1.1-.2.2-.3.4-.1.2-.2.3-.2.5 0 .1-.1.1-.2.2s-.2.1-.4.1-.3-.1-.4-.2c-.1-.1-.2-.3-.2-.5s.1-.4.2-.6c.1-.2.3-.4.5-.6.2-.2.5-.4.9-.5.4-.1.7-.2 1.2-.2.4 0 .7.1 1 .2.3.1.6.3.8.4.2.1.4.4.5.7.1.3.2.5.2.8 0 .4-.1.7-.3 1-.2.3-.4.6-.7.8.3.2.6.4.8.6.2.2.4.4.5.7.1.3.2.5.2.8 0 .4-.1.7-.2 1-.1.3-.4.6-.6.9-.2.3-.6.5-1 .6-.4.1-.8.2-1.3.2s-.9-.1-1.3-.3c-.4-.2-.7-.4-.9-.6-.2-.2-.4-.5-.5-.8-.1-.3-.2-.5-.2-.7 0-.2.1-.4.2-.5.1-.1.3-.2.5-.2.1 0 .2 0 .3.1.1.1.2.1.2.2.2.5.4.9.7 1.2.3.3.6.4 1 .4.2 0 .5-.1.7-.2.2-.1.4-.3.6-.5.2-.2.2-.5.2-.8 0-.5-.1-.8-.4-1.1-.3-.3-.6-.4-1-.4h-.7c-.2 0-.4-.1-.5-.2-.1-.1-.2-.3-.2-.4 0-.2.1-.3.2-.5s.3-.2.6-.2h.3v.1Zm6.5 4.4v-5.3c-1 .8-1.7 1.1-2 1.1-.2 0-.3-.1-.4-.2-.1-.1-.2-.3-.2-.5s.1-.3.2-.4c.1-.1.3-.2.7-.4.5-.2.9-.5 1.1-.7l.8-.8c.3-.3.4-.5.4-.6 0-.1.2-.1.4-.1s.4.1.5.2c.1.1.2.4.2.7v6.7c0 .8-.3 1.2-.8 1.2-.2 0-.4-.1-.6-.2-.2-.1-.3-.4-.3-.7Z" fill="currentColor"></path></svg>
-                                    <span>Schedule</span>
+                                    <span>Sellers</span>
                                 </a>
                             </li>
                             <li>
@@ -141,10 +141,10 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 dark:bg-gray-800">
                 <div class="flex flex-shrink-0 items-center px-4">
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                    <span class="pl-12 text-2xl dark:text-slate-300">VGC</span>
+                    <img class="pl-4 h-16 w-auto" src="/img/Logo.svg" alt="PixelFusion">
+                    
                 </div>
-                <div class="mt-5 flex flex-grow flex-col">
+                <div class="mt-1 flex flex-grow flex-col">
                     <nav class="flex-1 space-y-1 px-12 pb-4 dark:bg-gray-800">
                     <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
                     <ul class="flex flex-col gap-y-6 pt-20">
@@ -163,7 +163,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
+                            <a href="{{ path("admin_app_order") }}" class="flex gap-x-4 items-center py-2 text-gray-500 dark:text-gray-300 hover:text-indigo-600 group">
                                 <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out"></span>
                                 <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current"><path d="M5 19h15a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1V4a1 1 0 0 1 2 0v15Z" fill="currentColor"></path><path opacity=".3" d="M8.73 14.684a1 1 0 1 1-1.46-1.368l3.75-4a1 1 0 0 1 1.38-.077l2.959 2.526 3.856-4.885a1 1 0 1 1 1.57 1.24l-4.5 5.7a1 1 0 0 1-1.434.14l-3.024-2.58-3.097 3.304Z" fill="currentColor"></path></svg>
                                 <span>Orders</span>
