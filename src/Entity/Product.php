@@ -75,10 +75,14 @@ class Product
     #[ORM\OneToMany(mappedBy: 'productId', targetEntity: OrderDetails::class)]
     private Collection $orderDetails;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
+    private Collection $category;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -275,6 +279,30 @@ class Product
                 $orderDetail->setProductId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->category->removeElement($category);
 
         return $this;
     }
