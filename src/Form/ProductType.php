@@ -16,6 +16,7 @@ class ProductType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('price')
+            ->add('isActive')
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

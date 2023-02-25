@@ -30,7 +30,12 @@
                 <a href="{{ path('front_app_product_edit', {'slug': product.slug}) }}">
                     <div class="p-4 bg-stone-100 w-64 h-80 rounded-md flex flex-col justify-between gap-5">
                         <img class="h-4/5 object-cover object-top" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
-                        <div class="text-center font-bold">{{ product.title }}</div>
+                        <div class="flex justify-between items-center">
+                            <div class="font-bold">{{ product.title }}</div>
+                            {% if not product.isValid or not product.isActive or product.isBanned %}
+                                <div class="text-sm text-gray-500">Disabled</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             {% endfor %}
