@@ -67,16 +67,23 @@ class ProductRepository extends ServiceEntityRepository
         return $products;
     }
 
-    public function getProductsWithSearch(string $search, int $limit = 20): array
-    {
+    public function getProductsWithSearch(string $search, int $limit = 20): array {
         return $this->createQueryBuilder('p')
             ->andWhere('p.title LIKE :search')
             ->setParameter('search', '%' . $search . '%')
             ->orderBy('p.id', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }        
+
+    public function findByLast30Days() {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.createdAt >= :date')
+            ->setParameter('date', new \DateTime('-30 days'));
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**
