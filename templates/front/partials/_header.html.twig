@@ -18,7 +18,7 @@
 					<div class="flex justify-end items-center ">
 						<!-- Search -->
 						<div class="flex lg:ml-6">
-							<a href="#" class="text-gray-400 hover:text-gray-500">
+							<a href={{ path('front_app_product_index') }} class="text-gray-400 hover:text-gray-500">
 								<span class="sr-only">{{ 'search'|trans }}</span>
 								<!-- Heroicon name: outline/magnifying-glass -->
 								<picture>
@@ -70,6 +70,7 @@
 						aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
 						<div class="grid grid-cols-2 gap-x-4">
 							<div class="group relative text-sm">
+
 								{% if last_products[0].id is defined  %}
 								<div
 									class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
@@ -108,15 +109,15 @@
 							<ul role="list" aria-labelledby="digital-assets-heading-mobile"
 								class="mt-6 flex flex-col space-y-6">
 								<li class="flow-root">
-									<a href="#" class="-m-2 block p-2 text-gray-500">2D</a>
+									<a href={{ path('front_app_product_index', {'search': '2D'}) }} class="-m-2 block p-2 text-gray-500">2D</a>
 								</li>
 
 								<li class="flow-root">
-									<a href="#" class="-m-2 block p-2 text-gray-500">3D</a>
+									<a href={{ path('front_app_product_index', {'search': '3D'}) }} class="-m-2 block p-2 text-gray-500">3D</a>
 								</li>
 
 								<li class="flow-root">
-									<a href="#" class="-m-2 block p-2 text-gray-500">Abstract</a>
+									<a href={{ path('front_app_product_index', {'search': 'Abstract'}) }} class="-m-2 block p-2 text-gray-500">Abstract</a>
 								</li>
 							</ul>
 						</div>
@@ -241,15 +242,17 @@
 														<ul role="list" aria-labelledby="Clothing-heading"
 															class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
 															<li class="flex">
-																<a href="#" class="hover:text-gray-800">2D</a>
+																<a href={{ path('front_app_product_index', {'search': '2D'}) }} class="hover:text-gray-800">
+																	2D
+																</a>
 															</li>
 
 															<li class="flex">
-																<a href="#" class="hover:text-gray-800">3D</a>
+																<a href={{ path('front_app_product_index', {'search': '3D'}) }} class="hover:text-gray-800">3D</a>
 															</li>
 
 															<li class="flex">
-																<a href="#" class="hover:text-gray-800">Abstract</a>
+																<a href={{ path('front_app_product_index', {'search': 'Abstract'}) }} class="hover:text-gray-800">Abstract</a>
 															</li>
 														</ul>
 													</div>
@@ -288,7 +291,7 @@
 
 						<!-- Search -->
 						<div class="flex lg:ml-6">
-							<a href="#" class="p-2 text-gray-400 hover:text-gray-500">
+							<a href={{ path('front_app_product_index') }} class="p-2 text-gray-400 hover:text-gray-500">
 								<span class="sr-only">{{ 'search'|trans }}</span>
 								<!-- Heroicon name: outline/magnifying-glass -->
 								<picture>

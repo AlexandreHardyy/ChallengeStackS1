@@ -21,7 +21,7 @@ class ProductController extends AbstractController
             $search = $request->query->get('search');
             $result = $productRepository->getProductsWithSearch($search);
         } else {
-            $result = $productRepository->findAll();
+            $result = $productRepository->getAllProductsValid();
         }
 
         return $this->render('front/product/index.html.twig', [

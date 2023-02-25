@@ -1,14 +1,29 @@
 <div class="mx-24">
-{{ form_start(form, {'attr': {'class': 'flex justify-center gap-24 max-md:flex-col'}}) }}
-    <div>
-        <div class="flex flex-col my-4 w-64">
+<h2 class="text-2xl font-bold my-2">Informations du produit</h2>
+    <div class="mb-8">
+        {% if product.isValid %}
+            <div>- Produit Valider ✅</div>
+        {% endif %}
+        {% if product.isBanned %}
+            <div>- Produit Banni ❌</div>
+        {% endif %}
+    </div>
+{{ form_start(form, {'attr': {'class': 'flex justify-between gap-24 max-md:flex-col'}}) }}
+    <div class="flex-1">
+        <div class="flex flex-col my-4">
             {{ form_errors(form.imageFile) }}
             {{ form_label(form.imageFile) }}
             {{ form_widget(form.imageFile) }}
             {{ form_help(form.imageFile) }}
         </div>
     </div>
-    <div>
+    <div class="flex-1">
+        <div class="flex flex-col my-4">
+            {{ form_errors(form.isActive) }}
+            {{ form_label(form.isActive) }}
+            {{ form_widget(form.isActive) }}
+            {{ form_help(form.isActive) }}
+        </div>
         <div class="flex flex-col my-4">
             {{ form_errors(form.title) }}
             {{ form_label(form.title) }}
@@ -35,4 +50,3 @@
     {{ form_end(form) }}
     {{ include('front/product/_delete_form.html.twig') }}
 </div>
-
