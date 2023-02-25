@@ -3,9 +3,12 @@
 namespace App\Controller\Front;
 
 use App\Entity\Cart;
+use App\Entity\OrderHistory;
+use App\Entity\OrderState;
 use App\Entity\Product;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
+use App\Services\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,9 +16,120 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\Order;
+use App\Entity\OrderDetails;
+
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+    #[Route('/fake', name: 'app_cart_fake', methods: ['GET'])]
+    public function fake(EntityManagerInterface $em): Response
+    {
+        $cart = $this->getUser()->getCart();
+        $total = 0;
+
+        $order = new Order();
+        $orderHistory = new OrderHistory();
+        $status = $em->getRepository(OrderState::class)->find(1);
+
+        // Loop through products in cart and add them to order
+        foreach ($cart->getProducts() as $product) {
+            $orderDetail = new OrderDetails();
+            $orderDetail->setOrderId($order);
+            $orderDetail->setProductId($product);
+            $orderDetail->setPrice($product->getPrice());
+            $total += $product->getPrice();
+            $em->persist($orderDetail);
+
+            // Remove product from cart
+            $cart->removeProduct($product);
+            $em->persist($cart);
+        }
+
+        $order->setOwner($this->getUser());
+        $order->setTotalPaid($total);
+        $order->setCreatedAt(new \DateTime());
+        $order->setUpdatedAt(new \DateTime());
+        $orderHistory->setOrders($order);
+        $orderHistory->setState($status);
+        $orderHistory->setTimestamp(new \DateTime());
+
+        $em->persist($order);
+        $em->persist($orderHistory);
+        $em->flush();
+
+        return $this->render('front/user_account/history.html.twig', [
+            'orders' => $order->getOrderDetails(),
+        ]);
+    }
+
+    /**
+     * @throws ApiErrorException
+     */
+    #[Route('/create/order', name: 'app_cart_create_order', methods: ['POST'])]
+    public function createOrder(EntityManagerInterface $em, ProductRepository $productRepository): Response
+    {
+        $cart = $this->getUser()->getCart();
+        $total = 0;
+
+
+        $orderHistory = new OrderHistory();
+        $status = $em->getRepository(OrderState::class)->find(1);
+
+        $stripeService = new StripeService();
+        $resource = $productRepository->stripePayment($_POST);
+
+        if($resource !== null){
+            $totalPrice = array_reduce($cart->getProducts()->toArray(), function($sum, $product) {
+                return $sum + $product->getPrice();
+            }, 0.0);
+            $productTitles = implode(', ', array_map(function($product) {
+                return $product->getTitle();
+            }, $cart->getProducts()->toArray()));
+            $order = new Order();
+            $order->setOwner($this->getUser());
+
+            $order->setTotalPaid($total);
+            $order->setTotalPaid($totalPrice + ($totalPrice * 0.2));
+            $order->setBrandStripe($resource['stripeBrand']);
+            $order->setLast4Stripe($resource['stripeLast4']);
+            $order->setIdChargeStripe($resource['stripeId']);
+            $order->setStripeToken($resource['stripeToken']);
+            $order->setStatusStripe($resource['stripeStatus']);
+            $order->setCreatedAt(new \DateTime());
+            $order->setUpdatedAt(new \DateTime());
+
+
+            // Loop through products in cart and add them to order
+            foreach ($cart->getProducts() as $product) {
+                $orderDetail = new OrderDetails();
+                $orderDetail->setOrderId($order);
+                $orderDetail->setDescription($productTitles);
+                $orderDetail->setProductId($product);
+                $orderDetail->setPrice($product->getPrice());
+                $total += $product->getPrice();
+                $em->persist($orderDetail);
+
+                // Remove product from cart
+                $cart->removeProduct($product);
+                $em->persist($cart);
+            }
+
+            $orderHistory->setOrders($order);
+            $orderHistory->setState($status);
+            $orderHistory->setTimestamp(new \DateTime());
+
+            $em->persist($order);
+            $em->persist($orderHistory);
+            $em->flush();
+
+            return $this->redirect('/orders');;
+        } else{
+            return $this->redirect('/cart', 500);
+        }
+    }
+
+
     /**
      * @throws ApiErrorException
      */
@@ -23,9 +137,12 @@ class CartController extends AbstractController
     public function show(ProductRepository $productRepository): Response
     {
         $cart = $this->getUser()->getCart();
+        $cart_products = $cart->getProducts()->toArray();
         return $this->render('front/cart/show.html.twig', [
             'cart' => $cart,
-            'intent_secret'=> $productRepository->getIntentSecret()
+            'intentSecret'=> count($cart_products) > 0?
+                $productRepository->getIntentSecret($cart_products):
+                null
         ]);
     }
 

@@ -66,9 +66,13 @@ class Product
     #[Assert\Length(max: 3000, maxMessage: 'Vous devez avoir maximum 3000 caractères.')]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'productId', targetEntity: OrderDetails::class)]
+    private Collection $orderDetails;
+
     public function __construct()
     {
         $this->carts = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,6 +228,36 @@ class Product
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetails $orderDetail): self
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->add($orderDetail);
+            $orderDetail->setProductId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetails $orderDetail): self
+    {
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getProductId() === $this) {
+                $orderDetail->setProductId(null);
+            }
+        }
 
         return $this;
     }

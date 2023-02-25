@@ -9,67 +9,53 @@ use Stripe\PaymentIntent;
 
 class StripeService
 {
-    private $key;
+    private mixed $key;
 
     public function __construct(){
         if($_ENV['APP_ENV'] === 'dev'){
-            $this->key = $_ENV['STRIPE_PUBLIC_KEY_TEST'];
+            $this->key = $_ENV['STRIPE_SECRET_KEY_TEST'];
         } else{
-            $this->key = $_ENV['STRIPE_PUBLIC_KEY_LIVE'];
+            $this->key = $_ENV['STRIPE_SECRET_KEY_TEST'];
         }
     }
 
     /**
-     * @param Product $product
+     * @param int $price
+     * @param string $description
      * @return PaymentIntent
      * @throws ApiErrorException
      */
-    public function paymentIntent(array $products): \Stripe\PaymentIntent
+    public function paymentIntent(int $price, string $description): \Stripe\PaymentIntent
     {
-        $total = array_reduce($products, function($acc, $produit) { return $acc + $produit->getPrice(); }, 0);
         \Stripe\Stripe::setApiKey($this->key);
         return \Stripe\PaymentIntent::create([
-            'amount'=> $total * 100,
-            'current'=> Order::CURRENT,
-            'payment_method_type'=> ['card']
+            'amount'=> $price * 100,
+            'currency'=> Order::CURRENCY,
+            'payment_method_types'=> ['card'],
+            'description'=>'Commande de '.$description,
         ]);
     }
 
-
-    public function payment(
-        int $amount,
-        string $currency,
-        string $description,
-        array $stripeParameters
-    )
+    /**
+     * @param array $stripeParameters
+     * @return PaymentIntent|null
+     * @throws ApiErrorException
+     */
+    public function stripePayment(
+        array $stripeParameters,
+    ): ?PaymentIntent
     {
         \Stripe\Stripe::setApiKey($this->key);
         $payment_intent = null;
-
-        if(isset($stripeParameters['stripeIntentId'])){
-            $payment_intent = \Stripe\PaymentIntent::retrieve($stripeParameters['stripeIntentId']);
+        if(isset($stripeParameters['stripeIntendId'])){
+            $payment_intent = \Stripe\PaymentIntent::retrieve($stripeParameters['stripeIntendId']);
         }
 
-        if($stripeParameters['stripeIntentId'] === 'succeeded'){
+        if($stripeParameters['stripeIntendStatus'] === 'succeeded'){
             //TODO
         } else{
             $payment_intent->cancel();
         }
         return $payment_intent;
-    }
-
-    /**
-     * @param array $stripeParameters
-     * @param Product $product
-     * @return PaymentIntent|null
-     */
-    public function stripePayment(array $stripeParameters, Product $product): ?PaymentIntent
-    {
-        return $this->payment(
-            $product->getPrice() * 100,
-            ORDER::CURRENT,
-            $product->getTitle(),
-            $stripeParameters
-        );
     }
 }

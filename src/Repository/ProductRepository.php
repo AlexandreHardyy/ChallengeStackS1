@@ -89,25 +89,32 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Product $product
+     * @param array $products
      * @return string|null
      * @throws ApiErrorException
      */
     public function getIntentSecret(array $products):string|null
     {
-        $intent = $this->stripeService->paymentIntent($products);
+        $totalPrice = array_reduce($products, function($sum, $product) {
+            return $sum + $product->getPrice();
+        }, 0.0);
+        $productTitles = implode(', ', array_map(function($product) {
+            return $product->getTitle();
+        }, $products));
+        $intent = $this->stripeService->paymentIntent(round($totalPrice  + ($totalPrice * 0.2), 2), $productTitles);
         return $intent['client_secret'] ?? null;
     }
 
     /**
      * @param array $stripeParameters
-     * @param Product $product
+     * @param array $product
      * @return array|null
+     * @throws ApiErrorException
      */
-    public function stripePayment(array $stripeParameters, Product $product): ?array
+    public function stripePayment(array $stripeParameters): ?array
     {
         $resource = null;
-        $data = $this->stripeService->stripePayment($stripeParameters, $product);
+        $data = $this->stripeService->stripePayment($stripeParameters);
         if($data){
             $data_ = $data['charges']['data'][0];
             $resource = [

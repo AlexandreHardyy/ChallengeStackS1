@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SellerController extends AbstractController
 {
-    #[Route('/seller/request', name: 'app_seller')]
+    #[Route('/seller', name: 'app_seller')]
     #[Security("is_granted('ROLE_USER')")]
     public function becomeSeller(Request $request, SellerRequestRepository $sellerRequestRepository): Response
     {

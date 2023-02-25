@@ -1,4 +1,33 @@
+<div class="mx-24">
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    <div class="flex flex-col my-4">
+        {{ form_errors(form.title) }}
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_help(form.title) }}
+    </div>
+    <div class="flex flex-col my-4">
+        {{ form_errors(form.description) }}
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_help(form.description) }}
+    </div>
+    <div class="flex flex-col my-4">
+        {{ form_errors(form.price) }}
+        {{ form_label(form.price) }}
+        {{ form_widget(form.price) }}
+        {{ form_help(form.price) }}
+    </div>
+    <div class="flex flex-col my-4">
+        {{ form_errors(form.imageFile) }}
+        {{ form_label(form.imageFile) }}
+        {{ form_widget(form.imageFile) }}
+        {{ form_help(form.imageFile) }}
+    </div>
+    <div class="flex gap-5">
+        <button class="mt-6 px-4 py-2 w-64 rounded-md text-center bg-emerald-600 text-white hover:bg-emerald-700">{{ button_label|default('Save') }}</button>
+        <a class="mt-6 px-4 py-2 w-64 rounded-md text-center bg-slate-400 text-white hover:bg-slate-600" href="{{ path('front_app_product_index') }}">Back to List</a>
+    </div>
+    {{ form_end(form) }}
+</div>
+
