@@ -24,6 +24,9 @@ class OrderDetails
     #[ORM\Column]
     private ?float $Price = null;
 
+    #[ORM\Column]
+    private string $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,24 @@ class OrderDetails
     {
         $this->Price = $Price;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return OrderDetails
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
         return $this;
     }
 }
