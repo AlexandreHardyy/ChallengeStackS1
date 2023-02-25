@@ -41,14 +41,41 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-    public function findProductsByUser($user)
+    public function findAllProductsByOrderId(int $orderId): array
     {
-        $query = $this->createQueryBuilder('order')
-            ->select('order.id, order.owner_id, order.total_paid')
-            ->where('order.owner_id = :user')
-            ->setParameter('user', $user)
-            ->setMaxResults(10)
-            ->getQuery();
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('p.id, p.title, p.price, p.description, p.image, od.Price as orderPrice')
+            ->innerJoin('o.orderDetails', 'od')
+            ->innerJoin('od.productId', 'p')
+            ->where('o.id = :orderId')
+            ->setParameter('orderId', $orderId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOrderWithProducts(int $orderId): ?Order
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o, od, p')
+            ->innerJoin('o.orderDetails', 'od')
+            ->innerJoin('od.productId', 'p')
+            ->where('o.id = :orderId')
+            ->setParameter('orderId', $orderId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOrderWithProductsAndHistory(int $orderId): ?Order
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o, od, p, oh')
+            ->innerJoin('o.orderDetails', 'od')
+            ->innerJoin('od.productId', 'p')
+            ->innerJoin('o.orderHistories', 'oh')
+            ->where('o.id = :orderId')
+            ->setParameter('orderId', $orderId);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function createOrder(array $resource, int $price, User $user){
