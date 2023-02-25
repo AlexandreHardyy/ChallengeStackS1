@@ -18,7 +18,7 @@
         <!-- Product info -->
         <div class="mt-10 px-6 py-6 sm:mt-16 lg:mt-0 border-2 rounded-lg pb-0">
             <div class="flex">
-                <h2 class="inline-flex grow text-3xl tracking-tight text-gray-900">Price</h2>
+                <h2 class="inline-flex grow text-3xl tracking-tight text-gray-900">{{ 'price'|trans }}</h2>
                 <p class="inline-flex text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
             </div>
 
@@ -46,7 +46,7 @@
 
             <form class="mt-6">
                 <div class="sm:flex-col1 mt-10 flex">
-                    <a class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-emerald-600 py-3 px-8 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full" href="{{ path('front_app_cart_new', {'id': product.id}) }}">Add to cart</a>
+                    <a class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-emerald-600 py-3 px-8 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full" href="{{ path('front_app_cart_new', {'id': product.id}) }}">{{ 'add_to_cart'|trans }}</a>
 
                     <button type="button"
                         class="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
