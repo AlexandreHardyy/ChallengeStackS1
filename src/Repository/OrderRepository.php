@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -76,6 +78,20 @@ class OrderRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function createOrder(array $resource, int $price, User $user){
+        $order = new Order();
+        $order->setOwner($user);
+        $order->setTotalPaid($price);
+        $order->setBrandStripe($resource['stripeBrand']);
+        $order->setIdChargeStripe($resource['stripeId']);
+        $order->setLast4Stripe($resource['stripeLast4']);
+        $order->setStatusStripe($resource['stripeStatus']);
+        $order->setStripeToken($resource['stripeToken']);
+
+        $this->getEntityManager()->persist($order);
+        $this->getEntityManager()->flush();
+    }
+
     public function findByLast30Days(): array
     {
         $qb = $this->createQueryBuilder('o');
@@ -85,6 +101,7 @@ class OrderRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

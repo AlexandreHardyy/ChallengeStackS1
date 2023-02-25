@@ -1,24 +1,177 @@
 {% extends 'front_base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-3xl w-screen px-48 pt-4"><span class="font-bold">Panier</span> - {{ app.user.cart.products|length }} produit(s)</h1>
+    <h1 class="text-3xl w-screen pt-4"><span class="font-bold">Panier</span> - {{ app.user.cart.products|length }} produit(s)</h1>
 
-    <div class="flex flex-col w-screen px-24 py-8">
-        {% for item in cart.products %}
-            <div class="flex justify-between items-center bg-stone-100 px-24 py-4 rounded-md mb-4">
-                <div>
-                    <img class="h-20 object-cover w-full overflow-hidden rounded-lg" src="{{ vich_uploader_asset(item, 'imageFile') }}" alt="{{ item.title }}">
+
+    <div class="px-7">
+        <h1 class=" w-screen pt-4 font-bungee-inline lg:text-3xl md:text-2xl text-2xl">Votre panier</h1>
+        <span class="text-main-grey font-lato md:text-[16px] text-xs mb-4 block max-w-sm" >Vérifiez votre commande pour ne pas faire d'érreur lors de votre achat.</span>
+    {% if cart.products|length > 0  %}
+        {% set totalPrice = cart.products|reduce((sum, item) => sum + item.price, 0) %}
+        <div class="px-2 flex md:flex-row gap-12 flex-col h-full">
+            <aside class="min-h-44 h-fit flex-1 bg-gray-50 p-5 border rounded-lg shadow-sm">
+                {% for item in cart.products %}
+                    <article class="flex justify-between py-3">
+                        <div class="flex gap-x-3">
+                            <img src="{{ vich_uploader_asset(item, 'imageFile') }}" class="w-28 h-24 object-cover block rounded-lg border" />
+                            <div class="flex flex-col justify-between py-1">
+                                <div>
+                                    <h4 class="font-lato font-black text-[17px]">{{ item.title }}</h4>
+                                    <span class="font-lato text-gray-500 text-[15px] py-1">Personnal license</span>
+                                </div>
+                                <span class="font-lato font-black text-[18px]">{{ item.price }} €</span>
+                            </div>
+                        </div>
+                        {{ include('front/cart/_delete_form.html.twig') }}
+                    </article>
+                {% endfor %}
+            </aside>
+            <aside class="min-h-44 flex-1 bg-white p-5 border rounded-lg shadow-sm">
+                <h3 class="font-bold">Livraison</h3>
+                <span class="text-gray-400">Livraison prévu le 08/10 après validation du vendeur.</span>
+                <hr class="border-dashed mt-3" />
+                <div class="border mt-3 bg-white flex rounded-md">
+                    <input placeholder="Promocode" class="flex-1 outline-0 px-2 rounded-md"/>
+                    <a href="#" class="bg-white text-black text-sm px-5 py-2 border-l-2 rounded-md shadow-sm">Appliquer</a>
                 </div>
-                <div class="pt-2 font-bold">{{ item.title }}</div>
-                <div class="text-left"><span class="text-gray-500 flex-auto">Price : </span>{{ item.price }} $</div>
-                <div>{{ include('front/cart/_delete_form.html.twig') }}</div>
-            </div>
 
-            <a href="{{ path('front_app_cart_fake') }}">Fake order</a>
-        {% else %}
-            <div>
-                <span>Aucun produit</span>
-            </div>
-        {% endfor %}
-    </div>
+                <span class="text-gray-400">20% off discount.</span>
+                <hr class="border-dashed mt-3" />
+                <table class="w-full mt-3">
+                    <tbody>
+                        <tr>
+                            <td class="place-items-end text-gray-500">Sous-total</td>
+                            <td class="text-end text-gray-500">{{ totalPrice }}€</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="place-items-end text-gray-400">Discount <i class="fa-solid fa-circle-info"></i></td>
+                            <td class="text-end text-gray-400">0.00€</td>
+                        </tr>
+
+                        <tr>
+                            <td class="place-items-end text-gray-400">Tax</td>
+                            <td class="text-end text-gray-400">+ {{ (totalPrice * 0.2)|number_format(2)}}€</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr class="border-dashed mt-3" />
+                <div class="flex justify-between mt-3">
+                    <span class="text-gray-400">Total</span>
+                    <h3 class="font-bold">{{( totalPrice + (totalPrice * 0.2)|number_format(2))|number_format(2) }}€</h3>
+                </div>
+                <div class="mt-3">
+                    <form action="{{ path('front_app_cart_create_order') }}" method="post" id="payment-form" class="mb-3">
+                        <div class="form-row">
+                            <div id="card-elements"></div>
+
+                            <div id="card-errors" role="alert"></div>
+                        </div>
+                        <button type="submit" class="py-2 mt-3 w-full block bg-blue-700 shadow-sm text-white text-center rounded-md border border-blue-700 hover:bg-transparent hover:text-blue-700 ">Procéder au paiement</button>
+                    </form>
+                    <a href="{{ path('front_app_product_index') }}" class="py-2 block bg-white mt-2 text-center rounded-md border border-gray-400 hover:bg-transparent hover:shadow-md ">Continuer mon shopping</a>
+                </div>
+            </aside>
+        </div>
+
+    {% else %}
+        <div>
+            <span>Aucun produit</span>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            {% if intentSecret %}
+                let stripeToken;
+                {% if app_environment == 'dev' %}
+                    stripeToken = "{{ stripe_public_key_test }}";
+                {% else %}
+                    stripeToken = "{{ stripe_public_key_live }}";
+                {% endif %}
+                const stripe = Stripe(stripeToken);
+
+                const elements = stripe.elements();
+                const subscription = "{{ cart.id }}";
+                const clientSecret = "{{ intentSecret }}";
+                //const cardHolderName = "{{ app.user.email }}";
+                const cardHolderEmail = "{{ app.user.email }}";
+
+                const card = elements.create('card',{
+                    fontSize:'23px'
+                });
+                card.mount('#card-elements');
+
+                card.addEventListener('change',ev=>{
+                    const displayErrors = document.getElementById('card-errors')
+                    if(ev.error){
+                        displayErrors.textContent = ev.error.message;
+                    } else{
+                        displayErrors.textContent = '';
+                    }
+                })
+
+                const form = document.getElementById('payment-form')
+
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault()
+
+                    stripe.handleCardPayment(
+                        clientSecret,
+                        card,
+                        {
+                            payment_method_data:{
+                                billing_details:{
+                                    //name: cardHolderName,
+                                    email: cardHolderEmail
+                                }
+                            }
+                        }
+                    ).then((result)=>{
+                        if(result.error){
+
+                        } else if ('paymentIntent' in result){
+                            console.log(result)
+                            stripeTokenHandler(result.paymentIntent)
+                        }
+                    })
+                })
+                function stripeTokenHandler(intent) {
+                    const form = document.getElementById('payment-form');
+                    const InputIntendId = document.createElement('input');
+                    const InputIntendPaymentMethod= document.createElement('input');
+                    const InputIntendStatus= document.createElement('input');
+                    const InputSubscription= document.createElement('input');
+
+                    InputIntendId.setAttribute('type', 'hidden');
+                    InputIntendId.setAttribute('name', 'stripeIntendId');
+                    InputIntendId.setAttribute('value', intent.id);
+
+                    InputIntendPaymentMethod.setAttribute('type', 'hidden');
+                    InputIntendPaymentMethod.setAttribute('name', 'stripeIntendPaymentMethod');
+                    InputIntendPaymentMethod.setAttribute('value', intent.payment_method);
+
+                    InputIntendStatus.setAttribute('type', 'hidden');
+                    InputIntendStatus.setAttribute('name', 'stripeIntendStatus');
+                    InputIntendStatus.setAttribute('value', intent.status);
+
+                    InputSubscription.setAttribute('type', 'hidden');
+                    InputSubscription.setAttribute('name', 'subscription');
+                    InputSubscription.setAttribute('value', subscription);
+
+                    form.appendChild(InputIntendId);
+                    form.appendChild(InputIntendPaymentMethod);
+                    form.appendChild(InputIntendStatus);
+                    form.appendChild(InputSubscription);
+                    form.submit()
+                }
+            });
+        {% endif %}
+    </script>
 {% endblock %}
