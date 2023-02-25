@@ -132,7 +132,7 @@
             <div class="mt-8 max-w-[850px] xs w-full grid grid-cols-1 gap-x-6 gap-y-7 md:grid-cols-2 md:place-items-start place-items-center">
 
                 {% for product in five_last_products %}
-                    <a href="{{ path('front_app_product_show', {id:product.id}) }}" class="hover:opacity-75 hover:-translate-y-2 transition-all">
+                    <a href="{{ path('front_app_product_show', {'slug':product.slug}) }}" class="hover:opacity-75 hover:-translate-y-2 transition-all">
                         <article class="bg-main-blue w-96 h-44 flex p-3 rounded-[12px] border flex justify-between">
                             <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
                                 <div>

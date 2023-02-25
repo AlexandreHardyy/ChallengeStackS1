@@ -77,7 +77,7 @@
 										alt="New arrivals: Our latest digital assets for sale."
 										class="object-cover object-center">
 								</div>
-								<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+								<a href="{{ path('front_app_product_show', {'slug': last_products[0].slug}) }}"  class="mt-6 block font-medium text-gray-900">
 									<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 									New Arrivals
 								</a>
@@ -94,7 +94,7 @@
 										class="object-cover object-center">
 								</div>
 								{% if last_products[0].id is defined  %}
-								<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+								<a href="{{ path('front_app_product_show', {'slug': last_products[0].slug}) }}"  class="mt-6 block font-medium text-gray-900">
 									<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 									Currently Trending
 								</a>
@@ -208,7 +208,7 @@
 																class="object-cover object-center">
 														</div>
 														{% if last_products[0].id is defined  %}
-														<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+														<a href="{{ path('front_app_product_show', {'slug': last_products[0].slug}) }}"  class="mt-6 block font-medium text-gray-900">
 															<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 															Currently Trending
 														</a>
@@ -225,7 +225,7 @@
 																class="object-cover object-center">
 														</div>
 														{% if last_products[0].id is defined  %}
-														<a href="{{ path('front_app_product_show', {'id': last_products[0].id}) }}"  class="mt-6 block font-medium text-gray-900">
+														<a href="{{ path('front_app_product_show', {'slug': last_products[0].slug}) }}"  class="mt-6 block font-medium text-gray-900">
 															<span class="absolute inset-0 z-10" aria-hidden="true"></span>
 															New Arrivals
 														</a>
