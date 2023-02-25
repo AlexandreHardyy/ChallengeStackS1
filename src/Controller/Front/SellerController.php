@@ -4,6 +4,8 @@ namespace App\Controller\Front;
 
 use App\Entity\SellerRequest;
 use App\Form\BecomeSellerType;
+use App\Repository\OrderDetailsRepository;
+use App\Repository\OrderHistoryRepository;
 use App\Repository\SellerRequestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +17,11 @@ class SellerController extends AbstractController
 {
     #[Route('/seller', name: 'app_seller')]
     #[Security("is_granted('ROLE_USER')")]
-    public function becomeSeller(Request $request, SellerRequestRepository $sellerRequestRepository): Response
+    public function Seller(Request $request, SellerRequestRepository $sellerRequestRepository, OrderDetailsRepository $orderDetailsRepository): Response
     {
         $user = $this->getUser();
         $seller = new SellerRequest();
-
+        $totalSellProduct = $orderDetailsRepository->findProductByUser($user);
         $myProduct = $user->getProducts();
 
         $form = $this->createForm(BecomeSellerType::class, $seller);
@@ -34,7 +36,8 @@ class SellerController extends AbstractController
 
         return $this->render('front/seller/index.html.twig', [
             'form' => $form->createView(),
-            'myProducts' => $myProduct
+            'myProducts' => $myProduct,
+            'totalSellProduct' => $totalSellProduct[0][1],
         ]);
     }
 }
