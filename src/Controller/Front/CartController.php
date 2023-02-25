@@ -22,46 +22,6 @@ use App\Entity\OrderDetails;
 #[Route('/cart')]
 class CartController extends AbstractController
 {
-    #[Route('/fake', name: 'app_cart_fake', methods: ['GET'])]
-    public function fake(EntityManagerInterface $em): Response
-    {
-        $cart = $this->getUser()->getCart();
-        $total = 0;
-
-        $order = new Order();
-        $orderHistory = new OrderHistory();
-        $status = $em->getRepository(OrderState::class)->find(1);
-
-        // Loop through products in cart and add them to order
-        foreach ($cart->getProducts() as $product) {
-            $orderDetail = new OrderDetails();
-            $orderDetail->setOrderId($order);
-            $orderDetail->setProductId($product);
-            $orderDetail->setPrice($product->getPrice());
-            $total += $product->getPrice();
-            $em->persist($orderDetail);
-
-            // Remove product from cart
-            $cart->removeProduct($product);
-            $em->persist($cart);
-        }
-
-        $order->setOwner($this->getUser());
-        $order->setTotalPaid($total);
-        $order->setCreatedAt(new \DateTime());
-        $order->setUpdatedAt(new \DateTime());
-        $orderHistory->setOrders($order);
-        $orderHistory->setState($status);
-        $orderHistory->setTimestamp(new \DateTime());
-
-        $em->persist($order);
-        $em->persist($orderHistory);
-        $em->flush();
-
-        return $this->render('front/user_account/history.html.twig', [
-            'orders' => $order->getOrderDetails(),
-        ]);
-    }
 
     /**
      * @throws ApiErrorException
@@ -76,7 +36,6 @@ class CartController extends AbstractController
         $orderHistory = new OrderHistory();
         $status = $em->getRepository(OrderState::class)->find(1);
 
-        $stripeService = new StripeService();
         $resource = $productRepository->stripePayment($_POST);
 
         if($resource !== null){
@@ -107,7 +66,6 @@ class CartController extends AbstractController
                 $orderDetail->setDescription($productTitles);
                 $orderDetail->setProductId($product);
                 $orderDetail->setPrice($product->getPrice());
-                $total += $product->getPrice();
                 $em->persist($orderDetail);
 
                 // Remove product from cart

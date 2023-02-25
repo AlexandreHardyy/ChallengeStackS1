@@ -2,8 +2,11 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Category;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,19 +35,26 @@ class ProductController extends AbstractController
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_SELLER')")]
-    public function new(Request $request, ProductRepository $productRepository): Response
+    public function new(Request $request,ManagerRegistry $doctrine, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
     {
+        $entityManager = $doctrine->getManager();
+        // $category = new Category();
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $form_data = $form->getData()->getCategories();
+            foreach ($form_data as $datum){
+                $product->addCategory($datum);
+            }
             $product->setCreator($this->getUser());
             $product->setIsActive(false);
             $product->setIsBanned(false);
             $product->setIsValid(false);
-            $productRepository->save($product, true);
-
+            $entityManager->persist($product);
+            $entityManager->flush();
+            //$productRepository->save($product, true);
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,8 +82,12 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $form_data = $form->getData()->getCategories();
+            foreach ($form_data as $datum){
+                $product->addCategory($datum);
+            }
+            // Loop categories
             $productRepository->save($product, true);
-
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 

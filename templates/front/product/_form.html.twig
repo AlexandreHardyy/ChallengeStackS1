@@ -19,6 +19,12 @@
         {{ form_help(form.price) }}
     </div>
     <div class="flex flex-col my-4">
+        {{ form_errors(form.categories) }}
+        {{ form_label(form.categories) }}
+        {{ form_widget(form.categories) }}
+        {{ form_help(form.categories) }}
+    </div>
+    <div class="flex flex-col my-4">
         {{ form_errors(form.imageFile) }}
         {{ form_label(form.imageFile) }}
         {{ form_widget(form.imageFile) }}
