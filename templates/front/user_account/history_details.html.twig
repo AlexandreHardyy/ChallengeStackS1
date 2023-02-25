@@ -2,7 +2,7 @@
 
 {% block body %}
 <main class="antialiased">
-    <h1 class="text-2xl font-bold text-center my-4">Details of order {{ order.id }}</h1>
+    <h1 class="text-2xl font-bold text-center my-4">Details of order {{ order.slug | upper }}</h1>
 
     <div class="bg-white p-8 rounded-md w-full">
 		<div>

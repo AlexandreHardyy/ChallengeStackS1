@@ -13,7 +13,7 @@
 							<tr>
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-									Order Id
+									Reference
 								</th>
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -46,7 +46,7 @@
 									<div class="flex items-center">
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ order.id }}
+                                                {{ order.reference | upper }}
                                             </p>
                                         </div>
                                     </div>
@@ -65,12 +65,12 @@
 								</td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p class="text-gray-900 whitespace-no-wrap">
-                                        {{ order.createdAt|date('d/m/Y, H:i') }}
+                                        {{ order.createdAt|date('d/m/Y, H:i', 'Europe/Paris') }}
 									</p>
 								</td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {# TODO: If the status of the order is completed, create a refund button #}
-                                    <a href="{{ path('front_app_user_history_details', {'id': order.id}) }}">
+                                    <a href="{{ path('front_app_user_history_details', {'slug': order.slug}) }}">
                                         Check details
                                     </a>
 								</td>
