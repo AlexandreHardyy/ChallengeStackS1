@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,6 +26,7 @@ class Product
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
+    #[Assert\GreaterThan(value: 10)]
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -56,10 +58,14 @@ class Product
     #[ORM\Column]
     private ?bool $isBanned = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
     #[Assert\Length(max: 255, maxMessage: 'Vous devez avoir maximum 255 caractères.')]
     private ?string $title = null;
+
+    #[ORM\Column(length: 255)]
+    #[Slug(fields: ['title'])]
+    private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Cette valeur ne peut pas être vide.')]
@@ -217,6 +223,17 @@ class Product
     {
         $this->title = $title;
 
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): Product
+    {
+        $this->slug = $slug;
         return $this;
     }
 
