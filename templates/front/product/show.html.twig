@@ -19,7 +19,7 @@
         <div class="mt-10 px-6 py-6 sm:mt-16 lg:mt-0 border-2 rounded-lg pb-0">
             <div class="flex">
                 <h2 class="inline-flex grow text-3xl tracking-tight text-gray-900">{{ 'price'|trans }}</h2>
-                <p class="inline-flex text-3xl tracking-tight text-gray-900">{{ product.price }} €</p>
+                <p class="inline-flex text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
             </div>
 
             <div class="mt-6">
@@ -28,19 +28,19 @@
                     <p class="inline-flex text-l tracking-tight text-gray-900"></p>
                 </div>
                 <div class="flex items-center mb-2">
-                    <input checked id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4">
+                    <input checked id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4" selected>
                     <label for="default-radio-1" class="ml-2 text-sm font-medium text-emerald-900 dark:text-gray-700 hover:text-emerald-700">Personnal License</label>
-                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">$199</p>
+                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">${{ product.price }}</p>
                 </div>
                 <div class="flex items-center mb-2">
-                    <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4">
-                    <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-700">Commercial License</label>
-                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">$199</p>
+                    <input id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4" disabled>
+                    <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-300 dark:text-gray-500">Commercial License</label>
+                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-300 dark:text-gray-500">$199</p>
                 </div>
                 <div class="flex items-center mb-2">
-                    <input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4">
-                    <label for="default-radio-3" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-700">Extended Commercial</label>
-                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">$199</p>
+                    <input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4" disabled>
+                    <label for="default-radio-3" class="ml-2 text-sm font-medium text-gray-300 dark:text-gray-500">Extended Commercial</label>
+                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-300 dark:text-gray-500">$199</p>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
                                     <img class="h-6 w-6 flex-shrink-0"
                                         src="/img/Star-full.svg" alt="Check icon">
                                 </picture>
-                                <p class="inline-flex ml-2">Created: {{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                                <p class="inline-flex ml-2">Created: {{ product.createdAt ? product.createdAt|date("m/d/Y H:i", "Europe/Paris") : '' }}</p>
                             </div>
                             <div class="flex mt-2">
                                 <picture class="inline-flex">
@@ -110,7 +110,8 @@
                                     <img class="h-6 w-6 flex-shrink-0"
                                         src="/img/Star-full.svg" alt="Check icon">
                                 </picture>
-                                <p class="inline-flex ml-2">Updated: {{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</p>
+                                <p class="inline-flex ml-2">Updated: {{ product.updatedAt ? product.updatedAt|date("m/d/Y H:i", "Europe/Paris") : '' }}
+                                </p>
                             </div>
                             <div class="flex mt-2">
                                 <picture class="inline-flex">
