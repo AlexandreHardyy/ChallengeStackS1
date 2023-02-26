@@ -1,0 +1,66 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}Edit your profile{% endblock %}
+
+{% block body %}
+<main class="">
+    <h1 class="text-2xl font-bold text-center my-4">Edit your profile</h1>
+
+    <section class="w-1/2 mx-auto">
+        {{ form_start(updateAccountSettingForm) }}
+    <form class="space-y-8 divide-y divide-gray-200">
+        <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+            <div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+                <div>
+                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-slate-300">Personal Information</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-slate-400">Use a permanent address where you
+                        can receive mail.</p>
+                </div>
+                <div class="space-y-6 sm:space-y-5">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label for="first-name"
+                            class="block text-sm font-medium text-gray-700 dark:text-slate-300 sm:mt-px sm:pt-2">Email address</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(updateAccountSettingForm.email, {'attr':  {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}
+                            )}}
+                        </div>
+                        {{ form_errors(updateAccountSettingForm.email ) }}
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label for="last-name"
+                            class="block text-sm font-medium text-gray-700 dark:text-slate-300 sm:mt-px sm:pt-2">New
+                            Password</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(updateAccountSettingForm.plainPassword.first,{'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}
+                            )}}
+                        </div>
+                        {{ form_errors(updateAccountSettingForm.plainPassword.first ) }}
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label for="last-name"
+                            class="block text-sm font-medium text-gray-700 dark:text-slate-300 sm:mt-px sm:pt-2">Confirm
+                            Password</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(updateAccountSettingForm.plainPassword.second,{'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}
+                            )}}
+                        </div>
+                        {{ form_errors(updateAccountSettingForm.plainPassword.second ) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-5">
+            <div class="flex justify-end">
+                <button type="submit"
+                    class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+            </div>
+        </div>
+        {{ form_rest(updateAccountSettingForm) }}
+    </form>
+    {{ form_end(updateAccountSettingForm) }}
+    </section>
+</main>
+{% endblock %}
