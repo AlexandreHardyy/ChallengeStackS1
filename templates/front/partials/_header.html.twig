@@ -1,5 +1,6 @@
 <!-- Handle mobile -->
 <div x-data="{ open: false }" class="bg-white">
+	{% set categories = get_data('App\\Entity\\Category') %}
 	<!-- Mobile menu -->
 	<div x-show="open" @click.away="open = false" class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
 		<div class="fixed inset-0 z-40 flex">
@@ -105,7 +106,7 @@
 						</div>
 
 						<div>
-							<p id="digital-assets-heading-mobile" class="font-medium text-gray-900">Digital Assets</p>
+							<p id="digital-assets-heading-mobile" class="font-medium text-gray-900">All categories</p>
 							<ul role="list" aria-labelledby="digital-assets-heading-mobile"
 								class="mt-6 flex flex-col space-y-6">
 								<li class="flow-root">
@@ -237,23 +238,17 @@
 												</div>
 												<div class="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
 													<div>
-														<p id="Clothing-heading" class="font-medium text-gray-900">Digital Assets
+														<p id="Clothing-heading" class="font-medium text-gray-900">All categories
 														</p>
 														<ul role="list" aria-labelledby="Clothing-heading"
 															class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-															<li class="flex">
-																<a href={{ path('front_app_product_index', {'search': '2D'}) }} class="hover:text-gray-800">
-																	2D
-																</a>
-															</li>
-
-															<li class="flex">
-																<a href={{ path('front_app_product_index', {'search': '3D'}) }} class="hover:text-gray-800">3D</a>
-															</li>
-
-															<li class="flex">
-																<a href={{ path('front_app_product_index', {'search': 'Abstract'}) }} class="hover:text-gray-800">Abstract</a>
-															</li>
+															{% for category in  categories %}
+																<li class="flex">
+																	<a href={{ path('front_app_product_index', {'category': category.getId()}) }} class="hover:text-gray-800">
+																		{{ category.getName() }}
+																	</a>
+																</li>
+															{% endfor %}
 														</ul>
 													</div>
 												</div>

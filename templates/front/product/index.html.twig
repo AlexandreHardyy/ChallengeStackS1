@@ -21,7 +21,9 @@
 		<div class="mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
 			<div class="sm:flex sm:items-baseline sm:justify-between">
 				<h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">
-					{{ products|length }} Digital Assets
+					{{ products|length }} Digital Assets {% if category is not null %}
+						for category {{ category }}
+					{% endif %}
 				</h2>
 				{% if app.request.query.get('search') is not null %}
 					<div class="mt-4 sm:mt-0 sm:ml-4">
@@ -57,8 +59,8 @@
 							{{ 'products_not_found'|trans }}
 						</h3>
 						<p class="mt-1 text-sm text-gray-500">
-							Try another search parameter
-							<a href="{{ path('front_app_product_index', {'search': app.request.query.get('search')}) }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+							{{ category ? "Try another category": "Try another search parameter" }}
+							<a href={{ path('front_app_product_index', {'search': app.request.query.get('search')}) }} class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
 								{{ app.request.query.get('search') }}
 							</a>
 						</p>
