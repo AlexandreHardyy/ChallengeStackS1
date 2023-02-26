@@ -22,4 +22,5 @@ class DefaultController extends AbstractController
             'random_products' => $productRepository->getRandomProducts(5),
         ]);
     }
+
 }

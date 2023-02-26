@@ -3,13 +3,19 @@
 namespace App\Controller\Front;
 
 use App\Entity\Order;
+use App\Entity\Product;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\UpdateAccountSettingsType;
 use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 class UserAccountController extends AbstractController
 {
@@ -19,6 +25,26 @@ class UserAccountController extends AbstractController
     {
         return $this->render('front/user_account/index.html.twig', [
             'controller_name' => 'UserAccountController',
+        ]);
+    }
+
+    #[Route('/user/account/settings', name: 'app_user_account_settings')]
+    #[Security("is_granted('ROLE_USER')")]
+    public function manageAccountSettings(UserRepository $userRepository, Request $request): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UpdateAccountSettingsType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->save($user, true);
+            $this->addFlash('success', 'Profile updated!');
+            return $this->redirectToRoute('front_app_user_account');
+        }
+
+        return $this->renderForm('front/user_account/settings.html.twig', [
+            'updateAccountSettingForm' => $form
         ]);
     }
 
@@ -40,13 +66,25 @@ class UserAccountController extends AbstractController
     {
         $user = $security->getUser();
         if ($order->getOwner() !== $user) {
-            return $this->redirectToRoute('app_user_history');
+            return $this->redirectToRoute('front_app_user_history');
         }
         $products = $orderRepository->findAllProductsByOrderId($order->getId());
         return $this->render('front/user_account/history_details.html.twig', [
             'products' => $products,
             'order' => $order,
         ]);
+    }
+
+    #[Route('/user/get/{slug}/{slugP}', name: 'app_user_history_show', methods: ['GET'])]
+    #[Security("is_granted('ROLE_USER')")]
+    public function downloadDocument(Order $order, string $slugP ,DownloadHandler $downloadHandler, ProductRepository $productRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+        if ($order->getOwner() !== $user) {
+            return $this->redirectToRoute('front_app_user_history');
+        }
+        $product = $productRepository->findBy(['slug' => $slugP])[0];
+        return $downloadHandler->downloadObject($product, 'imageFile', null, $product->getTitle() . '.png');
     }
 }
 

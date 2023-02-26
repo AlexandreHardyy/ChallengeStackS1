@@ -11,6 +11,9 @@ use App\Repository\ProductRepository;
 use App\Services\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Exception\ApiErrorException;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +29,7 @@ class CartController extends AbstractController
      * @throws ApiErrorException
      */
     #[Route('/create/order', name: 'app_cart_create_order', methods: ['POST'])]
-    public function createOrder(EntityManagerInterface $em, ProductRepository $productRepository): Response
+    public function createOrder(EntityManagerInterface $em, ProductRepository $productRepository,  MailerInterface $mailer): Response
     {
         $cart = $this->getUser()->getCart();
         $total = 0;
@@ -59,8 +62,9 @@ class CartController extends AbstractController
             $order->setCreatedAt(new \DateTime());
             $order->setUpdatedAt(new \DateTime());
 
-
+           
             // Loop through products in cart and add them to order
+            $receipt_details = array(); 
             foreach ($cart->getProducts() as $product) {
                 $orderDetail = new OrderDetails();
                 $orderDetail->setOrderId($order);
@@ -69,11 +73,32 @@ class CartController extends AbstractController
                 $orderDetail->setPrice($product->getPrice());
                 $total += $product->getPrice();
                 $em->persist($orderDetail);
+                
+                $receipt_details[] = array(
+                    'title' => $product->getTitle(),
+                    'amount' => $product->getPrice(),
+                );
 
                 // Remove product from cart
                 $cart->removeProduct($product);
                 $em->persist($cart);
             }
+
+    
+            //send email
+            $email = (new TemplatedEmail())
+                ->from(new Address('no-reply@vgcreator.fr', 'PixelFusion'))
+                ->to($this->getUser()->getEmail())
+                ->subject('Confirmation de votre commande')
+                ->htmlTemplate('front/order/order_receipt.html.twig')
+                ->context([
+                    'order' => $order,
+                    'receipt_details' => $receipt_details,
+                ])
+            ;
+
+            $mailer->send($email);
+
 
             $orderHistory->setOrders($order);
             $orderHistory->setState($status);
