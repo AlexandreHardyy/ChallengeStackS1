@@ -145,7 +145,7 @@
                                 <span class="text-main-grey font-lato">{{ product.creator.email }}</span>
                             </div>
 
-                            <img class="flex-auto max-w-[9rem] object-cover" src="{{ vich_uploader_asset(product, 'imageFile') }}" />
+                            <img class="flex-auto max-w-[9rem] object-cover" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_watermark_filter') }}" />
                         </article>
                     </a>
                 {% endfor %}
