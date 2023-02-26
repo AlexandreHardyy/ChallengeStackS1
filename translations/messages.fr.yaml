@@ -20,6 +20,12 @@ ask_refund: Demander un remboursement
 ask_become_seller: Demandez pourquoi vous souhaitez devenir vendeur en quelques mots
 become_seller: Devenir vendeur
 send: Envoyer
+save: Sauvegarder
+title: Titre
+description: Description
+category: Catégorie
+is_active: Actif
+edit_product: Modifier le produit
 
 # Status codes
 VALIDATE: VALIDER

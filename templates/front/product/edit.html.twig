@@ -1,7 +1,7 @@
 {% extends 'front_base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-3xl font-bold text-center py-8">Edit Product</h1>
+    <h1 class="text-3xl font-bold text-center py-8">{{ 'edit_product'|trans }}</h1>
 
     {{ include('front/product/_formUpdate.html.twig', {'button_label': 'Update'}) }}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Form\ProductTypeUpdate;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,6 +68,10 @@ class ProductController extends AbstractController
     #[Route('/{slug}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
+        if ($product->isIsBanned() || !$product->isIsActive() || !$product->isIsValid()) {
+            $this->addFlash('error', 'Ce produit n\'existe pas.');
+            return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('front/product/show.html.twig', [
             'product' => $product,
         ]);
@@ -78,7 +83,7 @@ class ProductController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT_PRODCUT', $product);
 
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductTypeUpdate::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,12 +99,13 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'app_product_delete', methods: ['POST'])]
     #[Security("is_granted('ROLE_SELLER')")]
     public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product, true);
+           $product->setIsBanned(true);
+              $productRepository->save($product, true);
         }
 
         $this->addFlash('success', 'Votre produit a bien été supprimé.');

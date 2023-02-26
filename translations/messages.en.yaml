@@ -20,6 +20,8 @@ ask_refund: Ask for a refund
 ask_become_seller: Ask why you want to become a seller in few words
 become_seller: Become a seller
 send: Send
+save: Save
+edit_product: Edit product
 
 # Status codes
 VALIDATE: VALIDATE

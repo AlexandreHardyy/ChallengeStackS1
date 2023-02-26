@@ -39,6 +39,18 @@ class OrderHistoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function getLastOrderHistory(OrderHistory $orderHistory): ?OrderHistory
+    {
+        return $this->createQueryBuilder('oh')
+            ->andWhere('oh.Order = :order')
+            ->setParameter('order', $orderHistory->getOrder())
+            ->orderBy('oh.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return OrderHistory[] Returns an array of OrderHistory objects
 //     */

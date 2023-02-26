@@ -71,7 +71,7 @@
 									</p>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									{% if order.orderHistories|last.state.state == 'VALIDATE' %}
+									{% if order.orderHistories|sort|last.state.state == 'VALIDATE' %}
 										<a href="{{ path('front_app_refund', {'id': order.id}) }}" class="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 px-2 border-2 mr-4">
 											{{ 'ask_refund'|trans }}
 										</a>

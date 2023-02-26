@@ -31,11 +31,11 @@
 
                     <div class="mt-5 pt-3  flex justify-start md:mr-[calc(50%-50vw)] md:pr-8 md:w-[calc(50vw+49%)] gap-x-3 pr-0 overflow-x-scroll scrollbar-hide">
                         {% for category_product in category.getProducts() %}
-                            <a href={{ path('front_app_product_show', {'slug': category_product.slug})  }} class="group w-full max-w-[262px]">
+                            <a href="{{ path('front_app_product_show', {'slug': category_product.slug})  }}" class="group w-full max-w-[262px]">
                                 <article class="max-w-[262px] w-full transition-all group-hover:-translate-y-2">
                                     <div class="relative h-full">
                                         <span class="rounded-md absolute right-2 top-2 bg-silver px-2 py-0.5 text-xs font-lato">Popular 🔥</span>
-                                        <img src="{{ vich_uploader_asset(category_product, 'imageFile') }}" class="max-h-[333px]" />
+                                        <img src="{{ vich_uploader_asset(category_product, 'imageFile') }}" class="max-h-[333px]"  alt=""/>
                                     </div>
                                     <div class="flex flex-col w-max">
                                         <p href="#" class="font-lato font-extrabold transition-opacity">{{ category_product.title }}</p>
@@ -56,6 +56,7 @@
             <span href="#" class="font-lato text-main-blue-dark transition-opacity md:text-lg text-sm">Nos créateurs ont de quoi vous faire rêvés.</span>
             <div class="mt-8 max-w-[850px] xs w-full grid grid-cols-1 gap-x-6 gap-y-7 md:grid-cols-2 md:place-items-start place-items-center">
                 {% for product in five_last_products %}
+                    {% if not product.isBanned %}
                     <a href="{{ path('front_app_product_show', {'slug':product.slug}) }}" class="hover:opacity-75 hover:-translate-y-2 transition-all">
                         <article class="bg-main-blue w-96 h-44 p-3 rounded-[12px] border flex justify-between">
                             <div class="flex-auto w-32 items-stretch flex flex-col justify-between">
@@ -66,9 +67,10 @@
                                 <span class="text-main-grey font-lato">{{ product.creator.email }}</span>
                             </div>
 
-                            <img class="flex-auto max-w-[9rem] object-cover" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_watermark_filter') }}" />
+                            <img class="flex-auto max-w-[9rem] object-cover" src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_watermark_filter') }}"  alt=""/>
                         </article>
                     </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

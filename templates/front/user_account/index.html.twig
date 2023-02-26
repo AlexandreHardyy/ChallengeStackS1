@@ -28,7 +28,7 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <!-- Card -->
-                        <a href={{ path('front_app_user_history') }} class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                        <a href="{{ path('front_app_user_history') }}" class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
                             <div>
                                 <p class="mb-2 font-medium text-gray-900">
                                     Orders
@@ -40,7 +40,7 @@
                         </a>
 
                         <!-- Card -->
-                        <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                        <div class="flex items-center p-4 rounded shadow-xs bg-gray-100 px-4">
                             <div>
                                 <p class="mb-2 font-medium text-gray-900">
                                     Fidelity points
@@ -52,7 +52,7 @@
                         </div>
 
                         <!-- Card -->
-                        <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                        <div class="flex items-center p-4 rounded shadow-xs bg-gray-100 px-4">
                             <div>
                                 <p class="mb-2 font-medium text-gray-900">
                                     Favorites
@@ -64,7 +64,7 @@
                         </div>
 
                         <!-- Card -->
-                        <div class="flex items-center p-4 rounded shadow-xs hover:bg-gray-100 px-4  transition duration-200 ease-in-out">
+                        <div class="flex items-center p-4 rounded shadow-xs bg-gray-100">
                             <div>
                                 <p class="mb-2 font-medium text-gray-900">
                                     Coupons
@@ -75,35 +75,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="w-full">
-                <h3 class="font-medium text-gray-900 text-left px-6">Recent activites</h3>
-
-                <div class="mt-5 w-full flex flex-col items-center overflow-hidden text-sm">
-                    <a href="#"
-                        class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150">
-                        <picture>
-                            <source srcset="/img/Plus.svg" media="(min-width: 768px)">
-                            <img class="h-6 w-6 rounded-full shadow-md inline-block" src="/img/Plus.svg" alt="Activity">
-                        </picture>
-
-                        <span class="text-gray-900 px-3">Added [Product] in your cart</span>
-                        <span class="text-gray-500 text-xs">4 sec ago</span>
-                    </a>
-
-                    <a href="#"
-                        class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 block hover:bg-gray-100 transition duration-150">
-                        <picture>
-                            <source srcset="/img/Plus.svg" media="(min-width: 768px)">
-                            <img class="h-6 w-6 rounded-full shadow-md inline-block" src="/img/Plus.svg" alt="Activity">
-                        </picture>
-
-                        <span class="text-gray-900 px-3">Added item in favorites</span>
-                        <span class="text-gray-500 text-xs">24 min ago</span>
-                    </a>
-
                 </div>
             </div>
         </div>

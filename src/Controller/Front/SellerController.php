@@ -13,14 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 class SellerController extends AbstractController
 {
     #[Route('/seller', name: 'app_seller')]
-    #[Security("is_granted('ROLE_USER')")]
     public function Seller(Request $request, SellerRequestRepository $sellerRequestRepository, OrderDetailsRepository $orderDetailsRepository): Response
     {
         $user = $this->getUser();
+        if ($user->getSellerRequest() && in_array('ROLE_SELLER', $this->getUser()->getRoles(), true)) {
+            $this->addFlash('warning', 'Vous avez déjà fait une demande pour devenir vendeur ou votre compte est désactivé.');
+            return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
         $seller = new SellerRequest();
 
         $form = $this->createForm(BecomeSellerType::class, $seller);

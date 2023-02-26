@@ -18,6 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as SecurityGranted;
+
 
 use App\Entity\Order;
 use App\Entity\OrderDetails;
@@ -29,6 +31,7 @@ class CartController extends AbstractController
      * @throws ApiErrorException
      */
     #[Route('/create/order', name: 'app_cart_create_order', methods: ['POST'])]
+    #[SecurityGranted("is_granted('ROLE_USER')")]
     public function createOrder(EntityManagerInterface $em, ProductRepository $productRepository,  MailerInterface $mailer): Response
     {
         $cart = $this->getUser()->getCart();
@@ -120,6 +123,7 @@ class CartController extends AbstractController
      * @throws ApiErrorException
      */
     #[Route('/', name: 'app_cart_show', methods: ['GET'])]
+    #[SecurityGranted("is_granted('ROLE_USER')")]
     public function show(ProductRepository $productRepository): Response
     {
         $cart = $this->getUser()->getCart();
@@ -133,6 +137,7 @@ class CartController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_cart_new', methods: ['GET', 'POST'])]
+    #[SecurityGranted("is_granted('ROLE_USER')")]
     public function new(Product $product, CartRepository $cartRepository): Response
     {
         $user = $this->getUser();
@@ -148,6 +153,7 @@ class CartController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
+    #[SecurityGranted("is_granted('ROLE_USER')")]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
         $cart = $this->getUser()->getCart();

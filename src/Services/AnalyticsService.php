@@ -19,7 +19,7 @@ class AnalyticsService
     function getPercentsFromDate(): float {
         $date = new \DateTime();
         $date->modify('-7 day');
-        $Va = 0;
+        $Va = 1;
         $Vd = 1;
         foreach ($this->Orders as $order) {
             if ($date > $order->getOrderId()->getCreatedAt()) {
