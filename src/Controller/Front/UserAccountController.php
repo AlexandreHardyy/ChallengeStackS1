@@ -24,10 +24,13 @@ class UserAccountController extends AbstractController
 {
     #[Route('/user/account', name: 'app_user_account')]
     #[SecurityGranted("is_granted('ROLE_USER')")]
-    public function manageAccount(): Response
+    public function manageAccount(OrderRepository $orderRepository): Response
     {
+        $user = $this->getUser();
+        $total = $orderRepository->findBy(['Owner' => $user]);
+
         return $this->render('front/user_account/index.html.twig', [
-            'controller_name' => 'UserAccountController',
+            'total' => count($total),
         ]);
     }
 
