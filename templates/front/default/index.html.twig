@@ -24,108 +24,30 @@
     <section class="flex flex-col items-center p-8 overflow-hidden">
         <div class="flex flex-col xl:max-w-[850px] w-full">
             <h3 class="font-bungee-inline lg:text-5xl md:text-4xl text-2xl">Creatives ideas</h3>
-            <a href="#" class="group font-bungee-shade md:text-2xl hover:font-bold">videos games <i class="fa-solid transition-all mt-3 fa-chevron-right group-hover:translate-x-6"></i></a>
-            <a href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75 md:text-lg text-sm">Vous avez une idée de jeux-vidéos ?</a>
+            {% for category in categories %}
+                <div class="flex-col flex ">
+                    <a href="#" class="group font-bungee-shade md:text-2xl hover:font-bold">{{ category.getName() }} <i class="fa-solid transition-all mt-3 fa-chevron-right group-hover:translate-x-6"></i></a>
+                    <a href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75 md:text-lg text-sm">Vous avez une idée de jeux-vidéos ?</a>
 
-            <div class="mt-5 pt-3 flex justify-start md:mr-[calc(50%-50vw)] md:pr-8 md:w-[calc(50vw+49%)] gap-x-3 pr-0 overflow-x-scroll scrollbar-hide">
-                <a href="#" class="group">
-                    <article class="min-w-[262px] transition-all group-hover:-translate-y-2">
-                        <div class="relative">
-                            <span class="rounded-md absolute right-2 top-2 bg-silver px-2 py-0.5 text-xs font-lato">Popular 🔥</span>
-                            <img src="{{ asset('assets/joconde.png') }}" />
-                        </div>
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article>
-                </a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-            </div>
-            <br  />
-            <a href="#" class="group font-bungee-shade md:text-2xl hover:font-bold">Web sites Illustration <i class="fa-solid transition-all mt-3 fa-chevron-right group-hover:translate-x-6"></i></a>
-            <a href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75 md:text-lg text-sm">Besoin d’inspirations? décorez votre site avec cette collection.</a>
-            <div class="mt-5 pt-3 flex justify-start md:mr-[calc(50%-50vw)] md:pr-8 md:w-[calc(50vw+49%)] gap-x-3 pr-0 overflow-x-scroll scrollbar-hide">
-                <a href="#" class="group"><article class="min-w-[262px] transition-all group-hover:-translate-y-2">
-                        <div class="relative">
-                            <span class="rounded-md absolute right-2 top-2 bg-silver px-2 py-0.5 text-xs font-lato">Popular 🔥</span>
-                            <img src="{{ asset('assets/joconde.png') }}" />
-                        </div>
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-                <a href="#" class="group"><article class="min-w-[262px] transition group-hover:-translate-y-2">
-                        <img src="{{ asset('assets/joconde.png') }}" />
-                        <div class="flex flex-col w-max">
-                            <p href="#" class="font-lato font-extrabold transition-opacity">NFT cyberpunks 2077</p>
-                            <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">200 €</span>
-                        </div>
-                    </article></a>
-            </div>
+                    <div class="mt-5 pt-3  flex justify-start md:mr-[calc(50%-50vw)] md:pr-8 md:w-[calc(50vw+49%)] gap-x-3 pr-0 overflow-x-scroll scrollbar-hide">
+                        {% for category_product in category.getProducts() %}
+                            <a href={{ path('front_app_product_show', {'slug': category_product.slug})  }} class="group w-full max-w-[262px]">
+                                <article class="max-w-[262px] w-full transition-all group-hover:-translate-y-2">
+                                    <div class="relative h-full">
+                                        <span class="rounded-md absolute right-2 top-2 bg-silver px-2 py-0.5 text-xs font-lato">Popular 🔥</span>
+                                        <img src="{{ vich_uploader_asset(category_product, 'imageFile') }}" class="max-h-[333px]" />
+                                    </div>
+                                    <div class="flex flex-col w-max">
+                                        <p href="#" class="font-lato font-extrabold transition-opacity">{{ category_product.title }}</p>
+                                        <span href="#" class="font-lato text-main-blue-dark transition-opacity hover:opacity-75">{{ category_product.price }} €</span>
+                                    </div>
+                                </article>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <br/>
+                </div>
+            {% endfor %}
         </div>
     </section>
     <section class="flex flex-col items-center p-8">
@@ -133,7 +55,6 @@
             <h3 class="font-bungee-inline lg:text-5xl md:text-4xl text-2xl">New Publications</h3>
             <span href="#" class="font-lato text-main-blue-dark transition-opacity md:text-lg text-sm">Nos créateurs ont de quoi vous faire rêvés.</span>
             <div class="mt-8 max-w-[850px] xs w-full grid grid-cols-1 gap-x-6 gap-y-7 md:grid-cols-2 md:place-items-start place-items-center">
-
                 {% for product in five_last_products %}
                     <a href="{{ path('front_app_product_show', {'slug':product.slug}) }}" class="hover:opacity-75 hover:-translate-y-2 transition-all">
                         <article class="bg-main-blue w-96 h-44 p-3 rounded-[12px] border flex justify-between">

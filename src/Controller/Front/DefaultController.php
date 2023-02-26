@@ -17,7 +17,7 @@ class DefaultController extends AbstractController
         return $this->render('front/default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'last_products' => $productRepository->getLastProducts(1),
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categoryRepository->findBy([], null, 2),
             'five_last_products' => $productRepository->getLastProducts(5),
             'random_products' => $productRepository->getRandomProducts(5),
         ]);
