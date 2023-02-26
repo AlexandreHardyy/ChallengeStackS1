@@ -58,4 +58,14 @@ class StripeService
         }
         return $payment_intent;
     }
+
+    public function stripeRefund(array $stripeParameters): \Stripe\Refund
+    {
+        \Stripe\Stripe::setApiKey($this->key);
+        return \Stripe\Refund::create([
+            "charge" => $stripeParameters['chargeId'],
+            "amount" => $stripeParameters['amount'] * 100,
+        ]);
+    }
+ 
 }
