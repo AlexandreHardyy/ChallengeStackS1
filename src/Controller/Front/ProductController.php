@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,17 +16,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ProductController extends AbstractController
 {
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository, Request $request): Response
+    public function index(ProductRepository $productRepository,CategoryRepository $categoryRepository,  Request $request): Response
     {
-        if ($request->query->get('search')) {
+        $category = null;
+        if ($request->query->get('search') ||  $request->query->get('category')) {
             $search = $request->query->get('search');
-            $result = $productRepository->getProductsWithSearch($search);
+            $category_id = $request->query->get('category');
+
+            if($search) $result = $productRepository->getProductsWithSearch($search);
+            else {
+                $category = $categoryRepository->find($category_id)->getName();
+                $result = $productRepository->getProductsWithCategory($category_id);
+            }
         } else {
             $result = $productRepository->getAllProductsValid();
         }
 
         return $this->render('front/product/index.html.twig', [
             'products' => $result,
+            'category' => $category,
             'last_products' => $productRepository->getLastProducts(1),
         ]);
     }

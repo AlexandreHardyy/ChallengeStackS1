@@ -140,6 +140,20 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getProductsWithCategory(int $category, int $limit = 20): array {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->andWhere('c.id = :category')
+            ->andWhere('p.isActive = true')
+            ->andWhere('p.isValid = true')
+            ->andWhere('p.isBanned = false')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('category', $category)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByLast30Days() {
         $qb = $this->createQueryBuilder('p');
         $qb->select('p')
