@@ -19,7 +19,7 @@
         <div class="mt-10 px-6 py-6 sm:mt-16 lg:mt-0 border-2 rounded-lg pb-0">
             <div class="flex">
                 <h2 class="inline-flex grow text-3xl tracking-tight text-gray-900">{{ 'price'|trans }}</h2>
-                <p class="inline-flex text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
+                <p class="inline-flex text-3xl tracking-tight text-gray-900">{{ product.price }} €</p>
             </div>
 
             <div class="mt-6">
@@ -172,11 +172,9 @@
 
             <!-- Product info -->
             <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ product.title }}</h1>
 
                 <div class="mt-3">
                     <h2 class="sr-only">Product information</h2>
-                    <p class="text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
                 </div>
 
                 <!-- Reviews -->
@@ -186,8 +184,6 @@
 
                 <div class="mt-6">
                     <h3 class="sr-only">About the product</h3>
-                    <h4>Overview</h4>
-
                     <div class="space-y-6 text-base text-gray-700">
                         <p>{{ product.description }}</p>
                     </div>
@@ -196,8 +192,6 @@
         </div>
     </div>
 </main>
-
-{{ include('front/product/_delete_form.html.twig') }}
 
 {# <table class="table">
         <tbody>
