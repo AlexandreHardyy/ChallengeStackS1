@@ -7,7 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\UpdateAccountSettingsType;
 use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
 
@@ -19,6 +22,26 @@ class UserAccountController extends AbstractController
     {
         return $this->render('front/user_account/index.html.twig', [
             'controller_name' => 'UserAccountController',
+        ]);
+    }
+
+    #[Route('/user/account/settings', name: 'app_user_account_settings')]
+    #[Security("is_granted('ROLE_USER')")]
+    public function manageAccountSettings(UserRepository $userRepository, Request $request): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UpdateAccountSettingsType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->save($user, true);
+            $this->addFlash('success', 'Profile updated!');
+            return $this->redirectToRoute('front_app_user_account');
+        }
+
+        return $this->renderForm('front/user_account/settings.html.twig', [
+            'updateAccountSettingForm' => $form
         ]);
     }
 
