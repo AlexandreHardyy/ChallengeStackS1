@@ -13,9 +13,13 @@ my_account: Mon compte
 login: Connexion
 logout: Déconnexion
 register: Inscription
+sign_up: S'inscrire
 products: Produits
 products_not_found: Aucun produit trouvé
 ask_refund: Demander un remboursement
+ask_become_seller: Demandez pourquoi vous souhaitez devenir vendeur en quelques mots
+become_seller: Devenir vendeur
+send: Envoyer
 
 # Status codes
 VALIDATE: VALIDER

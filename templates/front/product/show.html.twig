@@ -19,7 +19,7 @@
         <div class="mt-10 px-6 py-6 sm:mt-16 lg:mt-0 border-2 rounded-lg pb-0">
             <div class="flex">
                 <h2 class="inline-flex grow text-3xl tracking-tight text-gray-900">{{ 'price'|trans }}</h2>
-                <p class="inline-flex text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
+                <p class="inline-flex text-3xl tracking-tight text-gray-900">{{ product.price }} €</p>
             </div>
 
             <div class="mt-6">
@@ -30,7 +30,7 @@
                 <div class="flex items-center mb-2">
                     <input checked id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4" selected>
                     <label for="default-radio-1" class="ml-2 text-sm font-medium text-emerald-900 dark:text-gray-700 hover:text-emerald-700">Personnal License</label>
-                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">${{ product.price }}</p>
+                    <p class="ml-2 flex justify-end grow text-sm font-medium text-gray-900 dark:text-gray-700">{{ product.price }} €</p>
                 </div>
                 <div class="flex items-center mb-2">
                     <input id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 border-gray-300" disabled>
