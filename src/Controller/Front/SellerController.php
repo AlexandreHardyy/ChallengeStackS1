@@ -19,7 +19,12 @@ class SellerController extends AbstractController
     public function Seller(Request $request, SellerRequestRepository $sellerRequestRepository, OrderDetailsRepository $orderDetailsRepository): Response
     {
         $user = $this->getUser();
-        if ($user->getSellerRequest() && in_array('ROLE_SELLER', $this->getUser()->getRoles(), true)) {
+        if (!$user) {
+            $this->addFlash('warning', 'Vous devez être connecté pour accéder à cette page.');
+            return $this->redirectToRoute('front_app_login', [], Response::HTTP_SEE_OTHER);
+        }
+        //dd($user->getSellerRequest() !== null);
+        if ($user->getSellerRequest() !== null && !in_array('ROLE_SELLER', $this->getUser()->getRoles(), true)) {
             $this->addFlash('warning', 'Vous avez déjà fait une demande pour devenir vendeur ou votre compte est désactivé.');
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
         }

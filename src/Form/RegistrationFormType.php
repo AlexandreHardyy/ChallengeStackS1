@@ -42,6 +42,12 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
+                'constraints' => [
+                    new Length([
+                        'min' => 8,
+                        'minMessage'=> 'Your password must be at least {{ limit }} characters long',
+                    ]),
+                ],
             ))
         ;
     }
