@@ -45,8 +45,9 @@ class OrderDetailsRepository extends ServiceEntityRepository
     public function findProductByUser($user)
     {
         $qb = $this->createQueryBuilder('od')
-            ->select('count(od.id)')
+            ->select('od')
             ->join('od.productId', 'p')
+            ->join('od.orderId', 'o')
             ->where('p.creator = :user')
             ->setParameter('user', $user)
             ->getQuery()

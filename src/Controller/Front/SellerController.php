@@ -7,6 +7,7 @@ use App\Form\BecomeSellerType;
 use App\Repository\OrderDetailsRepository;
 use App\Repository\OrderHistoryRepository;
 use App\Repository\SellerRequestRepository;
+use App\Services\AnalyticsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +22,6 @@ class SellerController extends AbstractController
     {
         $user = $this->getUser();
         $seller = new SellerRequest();
-        $totalSellProduct = $orderDetailsRepository->findProductByUser($user);
-        $myProduct = $user->getProducts();
 
         $form = $this->createForm(BecomeSellerType::class, $seller);
         $form->handleRequest($request);
@@ -34,10 +33,17 @@ class SellerController extends AbstractController
             return $this->redirectToRoute('front_app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $commission = 0.7;
+        $totalSellProduct = $orderDetailsRepository->findProductByUser($user);
+        $analytics = new AnalyticsService($totalSellProduct);
+        $myProduct = $user->getProducts();
+
         return $this->render('front/seller/index.html.twig', [
             'form' => $form->createView(),
             'myProducts' => $myProduct,
-            'totalSellProduct' => $totalSellProduct[0][1],
+            'SellProducts' => $totalSellProduct,
+            'commission' => $commission,
+            'analytics' => $analytics->getPercentsFromDate(),
         ]);
     }
 }
