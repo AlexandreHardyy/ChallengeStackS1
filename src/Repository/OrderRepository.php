@@ -44,7 +44,7 @@ class OrderRepository extends ServiceEntityRepository
     public function findAllProductsByOrderId(int $orderId): array
     {
         $qb = $this->createQueryBuilder('o');
-        $qb->select('p.id, p.title, p.price, p.description, p.image, od.Price as orderPrice')
+        $qb->select('p.id, p.title, p.slug, p.price, p.description, p.image, od.Price as orderPrice')
             ->innerJoin('o.orderDetails', 'od')
             ->innerJoin('od.productId', 'p')
             ->where('o.id = :orderId')

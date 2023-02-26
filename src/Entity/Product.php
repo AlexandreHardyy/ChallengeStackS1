@@ -39,7 +39,7 @@ class Product
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
     #[Assert\Image(
         maxSize: '2M',
-        mimeTypes: ['image/png', 'image/jpeg, image/apng'],
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/apng'],
         maxRatio: '5',
         mimeTypesMessage: 'PNG or JPG or APNG',
         maxRatioMessage: 'Votre ratio d\'image est de {{ ratio }}, celui accepté est {{ max_ratio }}'
