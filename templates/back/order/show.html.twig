@@ -14,12 +14,15 @@
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
+        <h4 class=" text-sm font-medium text-gray-500">REF: {{order.reference}}</h4>
+       
         <p class="text-sm text-gray-600">Order placed <time datetime="2021-03-22" class="font-medium text-gray-900">{{order.createdAt|date("l d F - H:i")}}</time></p>
         <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">
           View invoice
           <span aria-hidden="true"> &rarr;</span>
         </a>
       </div>
+     
   
       <!-- Products -->
       {% for oderDetail in order.orderDetails %}
