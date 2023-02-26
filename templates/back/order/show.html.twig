@@ -76,18 +76,19 @@
             {% for orderDetail in order.orderHistories|sort %}
             <div class="mt-6" aria-hidden="true">
             <div class="mt-6 hidden grid-cols-4 text-sm font-medium text-gray-600 sm:grid">
-                {% if orderDetail.id == 1 %}
+            
+                {% if orderDetail.state.id == 1 %}
                     {% set color = "bg-green-500" %}
-                {% elseif orderDetail.id == 2 %}
+                {% elseif orderDetail.state.id == 2 %}
                     {% set color = "bg-orange-300" %}
-                {% elseif orderDetail.id == 3 %}
+                {% elseif orderDetail.state.id == 3 %}
                     {% set color = "bg-yellow-500" %}
-                {% elseif orderDetail.id == 4 %}
+                {% elseif orderDetail.state.id == 4 %}
                     {% set color = "bg-red-500" %}
                 {% endif %}
                 <div class="{{color}} text-center">{{orderDetail.state.state}}</div>
                 <div class="ml-8 text-gray-500">{{orderDetail.timestamp|date("l d F - H:i")}}</div>
-                {% if orderDetail.id == 3 %}
+                {% if orderDetail.state.id == 3 %}
                     <a href="{{ path('admin_app_order_refund', {'id': order.id}) }}" class="ml-8 text-indigo-600 hover:text-indigo-500">Refund the order</a>
                 {% endif %}
             </div>
