@@ -12,3 +12,14 @@ seller : Sellers
 my_account: My account
 login: Login
 logout: Logout
+register: Register
+products: Products
+products_not_found: No products found
+ask_refund: Ask for a refund
+
+# Status codes
+VALIDATE: VALIDATE
+REFUND: REFUND
+CANCEL: CANCEL
+REFUND_PENDING: REFUND PENDING
+

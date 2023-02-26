@@ -17,10 +17,6 @@
 								</th>
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-									Product Id
-								</th>
-								<th
-									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 									Price
 								</th>
 								<th
@@ -35,7 +31,7 @@
 									Status
 								</th>
 								<th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-									Refund
+									Actions
 								</th>
 							</tr>
 						</thead>
@@ -52,15 +48,8 @@
                                     </div>
 								</td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">
-                                        {% for orderDetails in order.orderDetails %}
-                                            {{ loop.last == false ? orderDetails.id ~ ',' : orderDetails.id }}
-                                        {% endfor %}
-                                    </p>
-								</td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p class="text-gray-900 whitespace-no-wrap">
-                                        {{ order.totalPaid }}
+                                        {{ order.totalPaid }} €
 									</p>
 								</td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -70,19 +59,19 @@
 								</td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {# TODO: If the status of the order is completed, create a refund button #}
-                                    <a href="{{ path('front_app_user_history_details', {'slug': order.slug}) }}">
+                                    <a class="bg-sky-200 p-2 rounded-md hover:bg-sky-400 transition" href="{{ path('front_app_user_history_details', {'slug': order.slug}) }}">
                                         Check details
                                     </a>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p class="text-gray-900 whitespace-no-wrap">
-										{{ order.orderHistories|last.state.state }}
+										{{ order.orderHistories|last.state.state | trans }}
 									</p>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									{% if order.orderHistories|last.state.state == 'VALIDATE' %}
 										<a href="{{ path('front_app_refund', {'id': order.id}) }}" class="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 px-2 border-2 mr-4">
-											Refund
+											{{ 'ask_refund'|trans }}
 										</a>
 									{% else %}
 										<p class="text-gray-900 whitespace-no-wrap"></p>

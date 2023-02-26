@@ -12,4 +12,13 @@ seller : Vendeurs
 my_account: Mon compte
 login: Connexion
 logout: Déconnexion
+register: Inscription
+products: Produits
+products_not_found: Aucun produit trouvé
+ask_refund: Demander un remboursement
 
+# Status codes
+VALIDATE: VALIDER
+REFUND: REMBOURSER
+CANCEL: ANNULER
+REFUND_PENDING: REMBOURSEMENT EN ATTENTE
