@@ -7,6 +7,8 @@ use App\Entity\OrderHistory;
 use App\Entity\OrderState;
 use App\Repository\OrderHistoryRepository;
 use App\Repository\OrderRepository;
+use App\Services\StripeService;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +34,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/order/refund/{id}', name: 'app_order_refund')]
-    public function refund(Order $order, OrderHistoryRepository $orderHistoryRepository, EntityManagerInterface $em): Response
+    public function refund(Order $order, OrderHistoryRepository $orderHistoryRepository, OrderRepository $orderRepository, EntityManagerInterface $em): Response
     {
         $res = $order->getOrderHistories();
         for ($i = 0; $i < count($res); $i++) {
@@ -43,6 +45,9 @@ class OrderController extends AbstractController
         }
         
         //refund the order 
+        $stripeService = new StripeService();
+        $totalHT = $order->getTotalPaid() / 1.2;
+        $resource = $orderRepository->stripeRefund(array( "chargeId" => $order->getIdChargeStripe(), "amount" => $totalHT ));
         $orderHistory = new OrderHistory();
         $status = $em->getRepository(OrderState::class)->find(2); // 2 is the id of the refunded state
         $orderHistory->setOrders($order);
