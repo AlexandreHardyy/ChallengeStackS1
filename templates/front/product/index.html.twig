@@ -38,7 +38,7 @@
 				{% for product in products %}
 					<div class="group relative">
 						<div class="h-48 w-full overflow-hidden rounded-lg group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-2 sm:h-auto">
-							<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}"
+							<img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_watermark_filter') }}" alt="{{ product.title }}"
 								class="h-full w-full object-cover object-top" />
 						</div>
 						<h3 class="mt-4 text-base font-semibold text-gray-900">

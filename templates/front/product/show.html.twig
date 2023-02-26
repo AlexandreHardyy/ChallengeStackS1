@@ -9,7 +9,7 @@
         <div class="flex flex-col-reverse col-span-2">
             <div class="aspect-w-1 aspect-h-1 w-full">
                 <div class="rounded-lg overflow-hidden">
-                    <img src={{ vich_uploader_asset(product, 'imageFile') }} alt={{ product.title }}
+                    <img src="{{ vich_uploader_asset(product, 'imageFile') | imagine_filter('my_watermark_filter') }}" alt="{{ product.title }}"
                         class="h-full w-full object-cover object-top">
                 </div>
             </div>
