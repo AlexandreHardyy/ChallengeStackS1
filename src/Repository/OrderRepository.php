@@ -7,6 +7,9 @@ use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Services\StripeService;
+use Stripe\Exception\ApiErrorException;
+
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -18,8 +21,18 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+     /**
+     * @var StripeService
+     */
+    protected StripeService $stripeService;
+
+    /**
+     * @param ManagerRegistry $registry
+     * @param StripeService $stripeService
+     */
+    public function __construct(ManagerRegistry $registry, StripeService $stripeService)
     {
+        $this->stripeService = $stripeService;
         parent::__construct($registry, Order::class);
     }
 
@@ -44,7 +57,7 @@ class OrderRepository extends ServiceEntityRepository
     public function findAllProductsByOrderId(int $orderId): array
     {
         $qb = $this->createQueryBuilder('o');
-        $qb->select('p.id, p.title, p.price, p.description, p.image, od.Price as orderPrice')
+        $qb->select('p.id, p.title, p.slug, p.price, p.description, p.image, od.Price as orderPrice')
             ->innerJoin('o.orderDetails', 'od')
             ->innerJoin('od.productId', 'p')
             ->where('o.id = :orderId')
@@ -101,6 +114,19 @@ class OrderRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function stripeRefund(array $stripeParameters): ?array
+    {
+        $refund = $this->stripeService->stripeRefund($stripeParameters);
+        if(!empty($refund)){
+            $resource = [
+                'charge' => $refund['chargeId'],
+                'amount' => $refund['amount'],
+            ];
+        }
+        return $resource;
+    }
+   
 
 //    /**
 //     * @return Order[] Returns an array of Order objects
