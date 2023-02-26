@@ -25,7 +25,7 @@
 				</h2>
 				{% if app.request.query.get('search') is not null %}
 					<div class="mt-4 sm:mt-0 sm:ml-4">
-						<a href={{ path('front_app_product_index') }} class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+						<a href="{{ path('front_app_product_index') }}" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
 							Browse more assets
 							<span aria-hidden="true"> &rarr;</span>
 						</a>
@@ -47,7 +47,7 @@
 								{{ product.title }}
 							</a>
 						</h3>
-						<p class="mt-1 text-sm text-gray-500">${{product.price}}</p>
+						<p class="mt-1 text-sm text-gray-500">{{product.price}} €</p>
 					</div>
 				{% endfor %}
 
@@ -58,7 +58,7 @@
 						</h3>
 						<p class="mt-1 text-sm text-gray-500">
 							Try another search parameter
-							<a href={{ path('front_app_product_index', {'search': app.request.query.get('search')}) }} class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+							<a href="{{ path('front_app_product_index', {'search': app.request.query.get('search')}) }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
 								{{ app.request.query.get('search') }}
 							</a>
 						</p>
@@ -71,28 +71,6 @@
 						<span aria-hidden="true"> &rarr;</span>
 					</a>
 				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Featured section -->
-	<section aria-labelledby="cause-heading">
-		<div class="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
-			<div class="absolute inset-0 overflow-hidden">
-				<img src="https://tailwindui.com/img/ecommerce-images/home-page-03-feature-section-full-width.jpg"
-					alt="" class="h-full w-full object-cover object-center">
-			</div>
-			<div aria-hidden="true" class="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
-			<div class="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-				<blockquote class="font-semibold text-center text-3xl tracking-tight text-white sm:text-3xl">
-					<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-emerald-500 relative inline-block px-2">
-						<span class="relative text-white">Save 20%</span>
-					</span>
-					on our entire catalogue with a membership
-				</blockquote>
-					<p class="text-white mt-4">Subscribe and download unlimited content</p>
-				<a href="#"
-					class="mt-8 block w-full rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto">Start now!</a>
 			</div>
 		</div>
 	</section>
