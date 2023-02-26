@@ -9,15 +9,20 @@
             <div class="flex justify-between gap-12 max-md:flex-col max-md:gap-6">
                 <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
                     <div class="text-lg mb-4">Ventes réalisés</div>
-                    <div class="text-2xl font-bold">{{ totalSellProduct }}</div>
+                    <div class="text-2xl font-bold">{{ SellProducts | length }}</div>
                 </div>
                 <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
+                    {% set total = 0 %}
+                    {% for product in SellProducts %}
+                        {% set total = total + product.price %}
+                        {% set total = total * commission %}
+                    {% endfor %}
                     <div class="text-lg mb-4">Revenu estimé</div>
-                    <div class="text-2xl font-bold">454.32 $</div>
+                    <div class="text-2xl font-bold">{{ total }} €</div>
                 </div>
                 <div class="bg-slate-100 px-8 py-4 rounded-md flex-1">
                     <div class="text-lg mb-4">Evolution sur 7 jours</div>
-                    <div class="text-2xl font-bold">+ 22 %</div>
+                    <div class="text-2xl font-bold">{{ analytics }} %</div>
                 </div>
             </div>
         </div>
@@ -25,7 +30,7 @@
             <h2 class="text-2xl py-4 font-bold">Mes publications - {{ myProducts|length }}</h2>
             <a class="px-4 py-2 rounded-md w-32 bg-emerald-600 text-white hover:bg-emerald-700" href="{{ path('front_app_product_new') }}">Create new</a>
         </div>
-        <div class="flex gap-12 mt-8 max-md:flex-col max-md:justify-center max-md:items-center">
+        <div class="flex flex-wrap justify-between gap-12 mt-8 max-md:flex-col max-md:justify-center max-md:items-center">
             {% for product in myProducts %}
                 <a href="{{ path('front_app_product_edit', {'slug': product.slug}) }}">
                     <div class="p-4 bg-stone-100 w-64 h-80 rounded-md flex flex-col justify-between gap-5">
